@@ -183,7 +183,7 @@ UpgradeLog*.htm
 *.bim.layout
 *.bim_*.settings
 
-# Microsoft Fakes
+# Microsoft Fakes 
 FakesAssemblies/
 
 # Node.js Tools for Visual Studio
