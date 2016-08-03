@@ -7,7 +7,7 @@ Language:              C#
 Subject:               Framework, Map Authoring
 Contributor:           ArcGIS Pro SDK Team <arcgisprosdk@esri.com>
 Organization:          Esri, http://www.esri.com
-Date:                  4/4/2016
+Date:                  8/3/2016
 ArcGIS Pro:            1.3
 Visual Studio:         2013, 2015
 .NET Target Framework: .NET Framework 4.6.1
@@ -21,6 +21,15 @@ This add-in requires a third party nuget called AvalonEdit and a third party nug
 * [Extended.Wpf.Toolkit](http://wpftoolkit.codeplex.com/)
 
 When you first rebuild your solution those nuget are usually updated (or installed) auomatically. However, if that is not the case, you can use the NuGet Package manager inside Visual Studio (Tools->NuGet Package Manager->Manage NuGet Packages for Solution...).
+
+![NuGet](Screenshots/vs1.png)
+![NuGet](Screenshots/vs2.png)
+
+This add-in requires the [ArcGIS Pro SDK](https://github.com/esri/arcgis-pro-sdk#installing-arcgis-pro-sdk-for-net)
+
+If your References to the ArcGIS Pro Assemblies in the CImViewer project are broken (because your ArcGIS Pro is installed to a different location than the CIMViewer references) don't forget to use the [Pro Fix References](https://github.com/esri/arcgis-pro-sdk#arcgis-pro-sdk-for-net-utilities) utility that comes with the Pro SDK to fix them
+
+![ProSDK](Screenshots/pro_fix.png)
 
 
 ##Overview
