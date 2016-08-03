@@ -15,9 +15,13 @@ Visual Studio:         2013, 2015
 
 ##CIM Viewer tool resources
 
-This add-in requires a thrid party nuget called AvalonEdit, when you first rebuild your solution that nuget should be updated (or installed) auomatically, however, if that is not the case you can install the control for here:
+This add-in requires a third party nuget called AvalonEdit and a third party nuget called Extended.Wpf.Toolkit. 
 
 * [Avalon Edit nuget](https://www.nuget.org/packages/AvalonEdit)
+* [Extended.Wpf.Toolkit](http://wpftoolkit.codeplex.com/)
+
+When you first rebuild your solution those nuget are usually updated (or installed) auomatically. However, if that is not the case, you can use the NuGet Package manager inside Visual Studio (Tools->NuGet Package Manager->Manage NuGet Packages for Solution...).
+
 
 ##Overview
 <!-- TODO: Explain how this sample can be used. To use images in this section, create the image file in your sample project's screenshots folder. Use relative url to link to this image using this syntax: ![My sample Image](FacePage/SampleImage.png) -->
