@@ -7,7 +7,7 @@ Language:              C#
 Subject:               Framework, Map Authoring
 Contributor:           ArcGIS Pro SDK Team <arcgisprosdk@esri.com>
 Organization:          Esri, http://www.esri.com
-Date:                  4/4/2016
+Date:                  8/3/2016
 ArcGIS Pro:            1.3
 Visual Studio:         2013, 2015
 .NET Target Framework: .NET Framework 4.6.1
@@ -15,9 +15,25 @@ Visual Studio:         2013, 2015
 
 ##CIM Viewer tool resources
 
-This add-in requires a thrid party nuget called AvalonEdit, when you first rebuild your solution that nuget should be updated (or installed) auomatically, however, if that is not the case you can install the control for here:
+This add-in requires the [ArcGIS Pro SDK](https://github.com/esri/arcgis-pro-sdk#installing-arcgis-pro-sdk-for-net)
+
+This add-in requires a third party nuget called AvalonEdit and a third party nuget called Extended.Wpf.Toolkit. 
 
 * [Avalon Edit nuget](https://www.nuget.org/packages/AvalonEdit)
+* [Extended.Wpf.Toolkit](http://wpftoolkit.codeplex.com/)
+
+When you first rebuild your solution those nuget are usually updated (or installed) auomatically. However, if that is not the case, you can use the NuGet Package manager inside Visual Studio (Tools->NuGet Package Manager->Manage NuGet Packages for Solution...).
+
+![NuGet](Screenshots/vs1.png)
+
+![NuGet](Screenshots/vs2.png)
+
+
+**Note:**  
+If your References to the ArcGIS Pro Assemblies in the CIMViewer project are broken (because your ArcGIS Pro is installed to a different location than the CIMViewer references) don't forget to use the [Pro Fix References](https://github.com/esri/arcgis-pro-sdk#arcgis-pro-sdk-for-net-utilities) utility that comes with the Pro SDK to fix them
+
+![ProSDK](Screenshots/pro_fix1.png)
+
 
 ##Overview
 <!-- TODO: Explain how this sample can be used. To use images in this section, create the image file in your sample project's screenshots folder. Use relative url to link to this image using this syntax: ![My sample Image](FacePage/SampleImage.png) -->
