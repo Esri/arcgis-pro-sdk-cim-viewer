@@ -13,6 +13,16 @@ Visual Studio:         2013, 2015
 .NET Target Framework: .NET Framework 4.6.1
 ```
 
+##Overview
+<!-- TODO: Explain how this sample can be used. To use images in this section, create the image file in your sample project's screenshots folder. Use relative url to link to this image using this syntax: ![My sample Image](FacePage/SampleImage.png) -->
+The CIMViewer can be used to examine layer and map (2D or 3D) CIM definitions. Select a layer, map, or scene in the TOC with the viewer open and its CIM definition will be loaded into the XML Editor. The XML Editor uses the AvalonEdit control which provides syntax colorization and formatting. Cut, Copy, Paste, and XML Validation have been added in the Add-in so the XML editing experience is reasonably functional though not as rich as a fully fledged commercial editor like XML Spy. However, it is a simple task of copy/pasting the CIM XML into a commercial editor if that level of XML manipulation is desired.
+
+The Save button will save any changes you make back to the layer, map, or scene whose CIM definition you loaded. However, there is not much of a safety net to protect you against making really bad xml or other inadvertant mistakes so use the `Save` functionality with caution. The primary use of the CIM Viewer is to allow you, the developer, to decipher the inner workings or "guts" of the CIM and how it affects the configuration of your Pro project at any given point in time. In other words, it is a learning or educational tool, not a customization or configuration tool, that can be used to help you in your Pro development efforts.
+
+##Future:
+
+* Add CIM "Viewing" for Layouts
+
 ##CIM Viewer tool resources
 
 This add-in requires the [ArcGIS Pro SDK](https://github.com/esri/arcgis-pro-sdk#installing-arcgis-pro-sdk-for-net)
@@ -33,18 +43,6 @@ When you first rebuild your solution those nuget are usually updated (or install
 If your References to the ArcGIS Pro Assemblies in the CIMViewer project are broken (because your ArcGIS Pro is installed to a different location than the CIMViewer references) don't forget to use the [Pro Fix References](https://github.com/esri/arcgis-pro-sdk#arcgis-pro-sdk-for-net-utilities) utility that comes with the Pro SDK to fix them
 
 ![ProSDK](Screenshots/pro_fix1.png)
-
-
-##Overview
-<!-- TODO: Explain how this sample can be used. To use images in this section, create the image file in your sample project's screenshots folder. Use relative url to link to this image using this syntax: ![My sample Image](FacePage/SampleImage.png) -->
-The CIMViewer can be used to examine layer and map (2D or 3D) CIM definitions. Select a layer, map, or scene in the TOC with the viewer open and its CIM definition will be loaded into the XML Editor. The XML Editor uses the AvalonEdit control which provides syntax colorization and formatting. Cut, Copy, Paste, and XML Validation have been added in the Add-in so the XML editing experience is reasonably functional though not as rich as a fully fledged commercial editor like XML Spy. However, it is a simple task of copy/pasting the CIM XML into a commercial editor if that level of XML manipulation is desired.
-
-The Save button will save any changes you make back to the layer, map, or scene whose CIM definition you loaded. However, there is not much of a safety net to protect you against making really bad xml or other inadvertant mistakes so use the `Save` functionality with caution. The primary use of the CIM Viewer is to allow you, the developer, to decipher the inner workings or "guts" of the CIM and how it affects the configuration of your Pro project at any given point in time. In other words, it is a learning or educational tool, not a customization or configuration tool, that can be used to help you in your Pro development efforts.
-
-##Future:
-
-* Add CIM "Viewing" for Layouts
-* Add CIM "Viewing" for Project
 
 ##How to use the CIM Viewer tool
 
