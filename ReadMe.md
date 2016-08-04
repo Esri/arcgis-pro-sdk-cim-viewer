@@ -9,7 +9,7 @@ Contributor:           ArcGIS Pro SDK Team <arcgisprosdk@esri.com>
 Organization:          Esri, http://www.esri.com
 Date:                  8/3/2016
 ArcGIS Pro:            1.3
-Visual Studio:         2013, 2015
+Visual Studio:         2015
 .NET Target Framework: .NET Framework 4.6.1
 ```
 
@@ -38,6 +38,8 @@ When you first rebuild your solution those nuget are usually updated (or install
 
 ![NuGet](Screenshots/vs2.png)
 
+You don't have the NuGet Package Manager installed? Find it [here](https://visualstudiogallery.msdn.microsoft.com/5d345edc-2e2d-4a9c-b73b-d53956dc458d) or go to Tools->Extensions and Updates and search for "NuGet Package Manager"
+You are not familiar with NuGets? Watch [this tutorial](https://www.youtube.com/watch?v=F8sx49NdCNk)
 
 **Note:**  
 If your References to the ArcGIS Pro Assemblies in the CIMViewer project are broken (because your ArcGIS Pro is installed to a different location than the CIMViewer references) don't forget to use the [Pro Fix References](https://github.com/esri/arcgis-pro-sdk#arcgis-pro-sdk-for-net-utilities) utility that comes with the Pro SDK to fix them
