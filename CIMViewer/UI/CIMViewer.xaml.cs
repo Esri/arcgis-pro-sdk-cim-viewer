@@ -144,10 +144,12 @@ namespace CIMViewer.UI {
 
         #region Commands
 
-        RelayCommand _refreshCommand;
-        RelayCommand _saveCommand;
-        RelayCommand _clearCommand;
-        RelayCommand _validateCommand;
+        ICommand _refreshCommand;
+        ICommand _saveCommand;
+        ICommand _clearCommand;
+        ICommand _validateCommand;
+        ICommand _changeFontSizeCommand;
+
 
         public ICommand RefreshCommand {
             get
@@ -202,6 +204,23 @@ namespace CIMViewer.UI {
             get {
                 return _validateCommand ?? (_validateCommand = new RelayCommand(() => Validate()));
             }
+        }
+
+        public ICommand ChangeFontSizeCommand
+        {
+            get
+            {
+                return _changeFontSizeCommand ?? (_changeFontSizeCommand = new RelayCommand(
+                    (Action<object>)ChangeTextSize, (Func<bool>)(() => { return true; })));
+            }
+        }
+
+        private void ChangeTextSize(object cmdParam) {
+            string delta = cmdParam.ToString();
+
+            this.AvalonTextEditor.FontSize = (delta == "-1"
+                ? this.AvalonTextEditor.FontSize - 1
+                : this.AvalonTextEditor.FontSize + 1);
         }
 
         #region Editing Commands

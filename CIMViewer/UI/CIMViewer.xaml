@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CIMViewer.UI"
              xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+             xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+             xmlns:extensions="clr-namespace:ArcGIS.Desktop.Extensions;assembly=ArcGIS.Desktop.Extensions"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="400"
              Focusable="True">
@@ -20,14 +22,36 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License. 
 -->
-    <Grid MouseWheel="UIElement_OnMouseWheel">
+    <Grid>
+        <Grid.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <extensions:DesignOnlyResourceDictionary Source="pack://application:,,,/ArcGIS.Desktop.Framework;component\Themes\Default.xaml"/>
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </Grid.Resources>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                        Grid.Row="0" Margin="0,15,0,5">
+            <TextBlock Text="FontSize: " Style="{DynamicResource ProTextStyle}" FontSize="14"
+                       VerticalAlignment="Center"></TextBlock>
+            <Button Content="+" Style="{DynamicResource Esri_SimpleButton}" 
+                    Command="{Binding ChangeFontSizeCommand}"
+                    CommandParameter="+1" FontSize="16" MinHeight="20" MinWidth="30"
+                    ToolTip="Increase FontSize"></Button>
+            <Button Content="-" Style="{DynamicResource Esri_SimpleButton}" 
+                    Command="{Binding ChangeFontSizeCommand}"
+                    CommandParameter="-1" FontSize="16" MinHeight="20" MinWidth="30"
+                    ToolTip="Decrease FontSize"></Button>
+        </StackPanel>
+
         <Border Background="{DynamicResource Esri_Gray120}" BorderBrush="{DynamicResource Esri_Blue4}" BorderThickness="1"
-                    Grid.Row="0" Padding="1">
+                    Grid.Row="1" Padding="1">
             <DockPanel LastChildFill="True">
                 <Expander x:Name="Validation" Header="Validation" IsExpanded="False" DockPanel.Dock="Bottom">
                     <TextBox Text="{Binding Path=ValidationText, Mode=OneWay}" 
@@ -71,11 +95,11 @@
         </Border>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
-                        Grid.Row="1" Margin="0,15,0,5">
-            <Button Content="Refresh" Command="{Binding Path=RefreshCommand}" Width="65" Height="24" Margin="5,1"></Button>
-            <Button Content="Validate" Command="{Binding Path=ValidateCommand}" Width="65" Height="24" Margin="5,1"></Button>
-            <Button Content="Clear" Command="{Binding Path=ClearCommand}" Width="65" Height="24" Margin="5,1"></Button>
-            <Button Content="Save" Command="{Binding Path=SaveCommand}" Width="65" Height="24" Margin="5,1"></Button>
+                        Grid.Row="2" Margin="0,15,0,5">
+            <Button Content="Refresh" Command="{Binding Path=RefreshCommand}" Margin="5,1" Style="{DynamicResource Esri_SimpleButton}"></Button>
+            <Button Content="Validate" Command="{Binding Path=ValidateCommand}" Margin="5,1" Style="{DynamicResource Esri_SimpleButton}"></Button>
+            <Button Content="Clear" Command="{Binding Path=ClearCommand}" Margin="5,1" Style="{DynamicResource Esri_SimpleButton}"></Button>
+            <Button Content="Save" Command="{Binding Path=SaveCommand}" Margin="5,1" Style="{DynamicResource Esri_SimpleButton}"></Button>
         </StackPanel>
 
     </Grid>
