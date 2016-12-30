@@ -72,6 +72,36 @@ namespace CIMViewer {
                 SetMapMember(args.MapView);
                 CIMViewerModule.IgnoreEvents = false;
             });
+            ArcGIS.Desktop.Mapping.Events.ActiveMapViewChangedEvent.Subscribe((args) => {
+                if (CIMViewerModule.IgnoreEvents)
+                    return;
+                CIMViewerModule.IgnoreEvents = true;
+                if (args.OutgoingView != null)
+                    CIMService = null;
+                else if (args.IncomingView != null)
+                    SetMapMember(args.IncomingView);
+                CIMViewerModule.IgnoreEvents = false;
+            });
+            //Currently changes to an Animation do not raise a map property changed
+            //event....the map xml needs to be refreshed "manually"
+            ArcGIS.Desktop.Mapping.Events.MapPropertyChangedEvent.Subscribe((args) => {
+                if (CIMViewerModule.IgnoreEvents)
+                    return;
+                CIMViewerModule.IgnoreEvents = true;
+                if (_cimService != null && 
+                    _cimService.ServiceType == CIMServiceType.Map) {
+                    //we have a map definition loaded
+                    foreach (var map in args.Maps) {
+                        if (map.URI == _cimService.URI) {
+                            //our map is one of the maps that changed
+                            //refresh it
+                            CIMService = new MapService(map);
+                            break;
+                        }
+                    }
+                }
+                CIMViewerModule.IgnoreEvents = false;
+            });
             ArcGIS.Desktop.Mapping.Events.MapMemberPropertiesChangedEvent.Subscribe((args) => {
                 if (CIMViewerModule.IgnoreEvents)
                     return;
