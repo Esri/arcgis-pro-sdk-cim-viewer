@@ -22,7 +22,7 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License. 
 -->
-    <Grid>
+    <Grid MouseWheel="UIElement_OnMouseWheel">
         <Grid.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
@@ -38,20 +38,23 @@
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" 
                         Grid.Row="0" Margin="0,15,0,5">
-            <TextBlock Text="FontSize: " Style="{DynamicResource ProTextStyle}" FontSize="14"
+            <TextBlock Text="FontSize: " Style="{DynamicResource Esri_TextBlockRegular}" FontSize="14"
                        VerticalAlignment="Center"></TextBlock>
-            <Button Content="+" Style="{DynamicResource Esri_SimpleButton}" 
+            <Button Content="+" Style="{DynamicResource Esri_Button}" 
                     Command="{Binding ChangeFontSizeCommand}"
                     CommandParameter="+1" FontSize="16" MinHeight="20" MinWidth="30"
                     ToolTip="Increase FontSize"></Button>
-            <Button Content="-" Style="{DynamicResource Esri_SimpleButton}" 
+            <Button Content="-" Style="{DynamicResource Esri_Button}" 
                     Command="{Binding ChangeFontSizeCommand}"
                     CommandParameter="-1" FontSize="16" MinHeight="20" MinWidth="30"
                     ToolTip="Decrease FontSize"></Button>
         </StackPanel>
 
-        <Border Background="{DynamicResource Esri_Gray120}" BorderBrush="{DynamicResource Esri_Blue4}" BorderThickness="1"
+        <Border Background="{DynamicResource Esri_DockPaneClientAreaBackgroundBrush}" BorderThickness="1"
                     Grid.Row="1" Padding="1">
+            <Border.BorderBrush>
+                <SolidColorBrush Color="{DynamicResource Esri_Color_Blue}"></SolidColorBrush>
+            </Border.BorderBrush>
             <DockPanel LastChildFill="True">
                 <Expander x:Name="Validation" Header="Validation" IsExpanded="False" DockPanel.Dock="Bottom">
                     <TextBox Text="{Binding Path=ValidationText, Mode=OneWay}" 
@@ -96,10 +99,10 @@
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
                         Grid.Row="2" Margin="0,15,0,5">
-            <Button Content="Refresh" Command="{Binding Path=RefreshCommand}" Margin="5,1" Style="{DynamicResource Esri_SimpleButton}"></Button>
-            <Button Content="Validate" Command="{Binding Path=ValidateCommand}" Margin="5,1" Style="{DynamicResource Esri_SimpleButton}"></Button>
-            <Button Content="Clear" Command="{Binding Path=ClearCommand}" Margin="5,1" Style="{DynamicResource Esri_SimpleButton}"></Button>
-            <Button Content="Save" Command="{Binding Path=SaveCommand}" Margin="5,1" Style="{DynamicResource Esri_SimpleButton}"></Button>
+            <Button Content="Refresh" Command="{Binding Path=RefreshCommand}" Margin="5,1" Style="{DynamicResource Esri_Button}"></Button>
+            <Button Content="Validate" Command="{Binding Path=ValidateCommand}" Margin="5,1" Style="{DynamicResource Esri_Button}"></Button>
+            <Button Content="Clear" Command="{Binding Path=ClearCommand}" Margin="5,1" Style="{DynamicResource Esri_Button}"></Button>
+            <Button Content="Save" Command="{Binding Path=SaveCommand}" Margin="5,1" Style="{DynamicResource Esri_Button}"></Button>
         </StackPanel>
 
     </Grid>
