@@ -27,8 +27,11 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <Border Background="{DynamicResource Esri_Gray120}" BorderBrush="{DynamicResource Esri_Blue}" 
+        <Border Background="{DynamicResource Esri_DockPaneClientAreaBackgroundBrush}"
                 BorderThickness="2">
+            <Border.BorderBrush>
+                <SolidColorBrush Color="{DynamicResource Esri_Color_Blue}"></SolidColorBrush>
+            </Border.BorderBrush>
 
             <local:CIMViewer x:Name="MapMemberCimView" Margin="17,17,40,10" 
                    CIMService="{Binding Path=CIMService, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">

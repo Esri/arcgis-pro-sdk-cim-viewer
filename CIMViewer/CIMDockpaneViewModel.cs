@@ -82,8 +82,7 @@ namespace CIMViewer {
                     SetMapMember(args.IncomingView);
                 CIMViewerModule.IgnoreEvents = false;
             });
-            //Currently changes to an Animation do not raise a map property changed
-            //event....the map xml needs to be refreshed "manually"
+
             ArcGIS.Desktop.Mapping.Events.MapPropertyChangedEvent.Subscribe((args) => {
                 if (CIMViewerModule.IgnoreEvents)
                     return;
