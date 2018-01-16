@@ -15,19 +15,22 @@ Visual Studio:         2015
 
 ## Overview
 <!-- TODO: Explain how this sample can be used. To use images in this section, create the image file in your sample project's screenshots folder. Use relative url to link to this image using this syntax: ![My sample Image](FacePage/SampleImage.png) -->
-The CIMViewer can be used to examine layer and map (2D or 3D) CIM definitions. Select a layer, map, or scene in the TOC with the viewer open and its CIM definition will be loaded into the XML Editor. The XML Editor uses the AvalonEdit control which provides syntax colorization and formatting. Cut, Copy, Paste, and XML Validation have been added in the Add-in so the XML editing experience is reasonably functional though not as rich as a fully fledged commercial editor like XML Spy. However, it is a simple task of copy/pasting the CIM XML into a commercial editor if that level of XML manipulation is desired.
+The CIMViewer can be used to examine layer, map (2D or 3D), and layout CIM definitions. Select a layer, map, scene, or layout in the TOC with the viewer open and its CIM definition will be loaded into the XML Editor. The XML Editor uses the AvalonEdit control which provides syntax colorization and formatting. Cut, Copy, Paste, and XML Validation have been added in the Add-in so the XML editing experience is reasonably functional though not as rich as a fully fledged commercial editor like XML Spy. However, it is a simple task of copy/pasting the CIM XML into a commercial editor if that level of XML manipulation is desired.
 
-The Save button will save any changes you make back to the layer, map, or scene whose CIM definition you loaded. However, there is not much of a safety net to protect you against making really bad xml or other inadvertant mistakes so use the `Save` functionality with caution. The primary use of the CIM Viewer is to allow you, the developer, to decipher the inner workings or "guts" of the CIM and how it affects the configuration of your Pro project at any given point in time. In other words, it is a <u>learning or educational tool</u> that can be used to help you in your Pro development efforts. It is **not** a customization or configuration tool.
+The Save button will save any changes you make back to the layer, map, scene, or layout whose CIM definition you loaded. However, there is not much of a safety net to protect you against making really bad xml or other inadvertant mistakes so use the `Save` functionality with caution. The primary use of the CIM Viewer is to allow you, the developer, to decipher the inner workings or "guts" of the CIM and how it affects the configuration of your Pro project at any given point in time. In other words, it is a <u>learning or educational tool</u> that can be used to help you in your Pro development efforts. It is **not** a customization or configuration tool.
 
-## Future:
+A second add-in, CIMViewerAnno, has been added to the CIMViewerSolution. CIMViewerAnno adds a dockpane that allows you to view the CIMTextGraphic of annotation features. With at least one annotation layer loaded into the current map, select annotation features to load their CIM (similar to the way the CIMViewer works). You will see a preview image of the selected text graphic along with its CIM definition. You can use the standard Pro select tool or the custom select tool provided with the CIMViewerAnno add-in.
 
-* Add CIM "Viewing" for Layouts
+## ArcGIS Pro 2.1
 
-## CIM Viewer tool resources
+ * Support for layouts and layout elements added
+ * A CIMViewerAnno project is added to allow you to view and edit anno text graphics CIM xml.
 
-This add-in requires the [ArcGIS Pro SDK](https://github.com/esri/arcgis-pro-sdk#installing-arcgis-pro-sdk-for-net)
+## CIM Viewer tool and CIMViewerAnno resources
 
-This add-in requires a third party nuget called AvalonEdit and a third party nuget called Extended.Wpf.Toolkit. 
+Both add-ins require the [ArcGIS Pro SDK](https://github.com/esri/arcgis-pro-sdk#installing-arcgis-pro-sdk-for-net)
+
+Both add-ins require a third party nuget called AvalonEdit and a third party nuget called Extended.Wpf.Toolkit. 
 
 * [Avalon Edit nuget](https://www.nuget.org/packages/AvalonEdit)
 * [Extended.Wpf.Toolkit](http://wpftoolkit.codeplex.com/)
@@ -59,6 +62,17 @@ If your References to the ArcGIS Pro Assemblies in the CIMViewer project are bro
 1. To "post" (or save) any changes you made in the "Cartographic Information Model Viewer" dockpane back to ArcGIS Pro you can click the 'Save' button.
 1. Select the map or scene node in the TOC to view its CIM
 ![UI](Screenshots/Screen4.png)
+
+##CIMViewerAnno tool
+
+1. Make sure you have the add-in built and available
+1. Start ArcGIS Pro
+1. Open any project that has an annotation layer
+1. Open the CIMAnnoDockPane
+1. Select any annotation feature to load its text graphic CIM definition
+![UI](Screenshots/Screen5.png)
+1. If you make changes to the CIM definition you can use "Preview" to change the preview image on the dockpane without changing the underlying annotation feature.
+1. Select "Save" to apply your changes to the selected annotation feature (assuming you have the appropriate write permissions on the annotation feature class).
 
 ##ArcGIS Pro SDK Resources
 
