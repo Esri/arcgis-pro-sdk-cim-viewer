@@ -15,13 +15,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ArcGIS.Desktop.Framework.Threading.Tasks;
 using ArcGIS.Desktop.Mapping;
+using ArcGIS.Desktop.Layouts;
 
 namespace CIMViewer.Helpers {
 
     public enum CIMServiceType {
         MapMember,
-        Map
+        Map,
+        Layout,
+        LayoutElement
     };
 
     /// <summary>
@@ -114,4 +118,93 @@ namespace CIMViewer.Helpers {
             this.Map.ValidateDefinition(xmlDefinition);//Can throw
         }
     }
+
+  /// <summary>
+  /// Provides read/write access to the Map's CIM definition (CIMMap)
+  /// </summary>
+  public class LayoutService : CIMService
+  {
+
+    private Layout _layout;
+
+    public LayoutService(Layout layout)
+    {
+      _layout = layout;
+      _serviceType = CIMServiceType.Layout;
+    }
+
+    public Layout Layout => _layout;
+
+    public override string URI => _layout.URI;
+
+    public override Task<string> GetDefinitionAsync()
+    {
+      return this.Layout.GetDefinitionInternalAsync();
+    }
+
+    public override Task SetDefinitionAsync(string xmlDefinition)
+    {
+      return this.Layout.SetDefinitionInternalAsync(xmlDefinition);
+    }
+
+    public override void ValidateDefinition(string xmlDefinition)
+    {
+      this.Layout.ValidateDefinition(xmlDefinition);//Can throw
+    }
+  }
+
+  /// <summary>
+  /// Provides read/write access to the MapMember's CIM definition
+  /// </summary>
+  public class LayoutElementService : CIMService
+  {
+
+    private Element _elem;
+
+    public LayoutElementService(Element element)
+    {
+      _elem = element;
+      _serviceType = CIMServiceType.LayoutElement;
+    }
+
+    /// <summary>
+    /// Get the layout element
+    /// </summary>
+    public Element Element => _elem;
+
+    /// <summary>
+    /// Gets the element URI (for layout elements return its name)
+    /// </summary>
+    public override string URI => _elem.Name;
+
+    /// <summary>
+    /// Get the underlying CIM Definition from the layout element
+    /// </summary>
+    /// <returns></returns>
+    public override Task<string> GetDefinitionAsync()
+    {
+      return this.Element.GetDefinitionAsync();
+    }
+
+    /// <summary>
+    /// Set the underlying element's CIMDefinition to the new "xmlDefinition"
+    /// </summary>
+    /// <param name="xmlDefinition"></param>
+    /// <returns></returns>
+    public override Task SetDefinitionAsync(string xmlDefinition)
+    {
+      return Element.SetDefinitionAsync(xmlDefinition); //Can throw
+    }
+
+    /// <summary>
+    /// Validate the layout element's xmlDefinition
+    /// </summary>
+    /// <param name="xmlDefinition"></param>
+    /// <remarks>This will throw a System.Xml.XmlException if the xml is invalid</remarks>
+    /// <exception cref="System.Xml.XmlException">The Xml is Invalid or Incorrectly Formatted</exception>
+    public override void ValidateDefinition(string xmlDefinition)
+    {
+      Element.ValidateDefinition(xmlDefinition); //Can throw
+    }
+  }
 }

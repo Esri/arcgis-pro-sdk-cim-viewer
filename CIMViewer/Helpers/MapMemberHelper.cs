@@ -32,8 +32,8 @@ namespace CIMViewer.Helpers {
                 if (mm == null)
                     return "";
                 if (mm is Layer)
-                    return ((Layer) mm).GetDefinition().ToXml();
-                return ((StandaloneTable) mm).GetDefinition().ToXml();
+                    return ((Layer) mm).GetDefinition()?.ToXml() ?? "";
+                return ((StandaloneTable) mm).GetDefinition()?.ToXml() ?? "";
             });
         }
 
