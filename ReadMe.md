@@ -49,7 +49,7 @@ If your References to the ArcGIS Pro Assemblies in the CIMViewer project are bro
 
 ![ProSDK](Screenshots/pro_fix1.png)
 
-##How to use the CIM Viewer tool
+## How to use the CIM Viewer tool
 
 1. Make sure you have re-built the CIM Viewer tool and the add-in is available in ArcGIS Pro.  
 1. Start ArcGIS Pro.  
@@ -63,7 +63,7 @@ If your References to the ArcGIS Pro Assemblies in the CIMViewer project are bro
 1. Select the map or scene node in the TOC to view its CIM
 ![UI](Screenshots/Screen4.png)
 
-##CIMViewerAnno tool
+## CIMViewerAnno tool
 
 1. Make sure you have the add-in built and available
 1. Start ArcGIS Pro
@@ -74,7 +74,7 @@ If your References to the ArcGIS Pro Assemblies in the CIMViewer project are bro
 1. If you make changes to the CIM definition you can use "Preview" to change the preview image on the dockpane without changing the underlying annotation feature.
 1. Select "Save" to apply your changes to the selected annotation feature (assuming you have the appropriate write permissions on the annotation feature class).
 
-##ArcGIS Pro SDK Resources
+## ArcGIS Pro SDK Resources
 
 * [API Reference online](http://pro.arcgis.com/en/pro-app/sdk/api-reference)
 * <a href="http://pro.arcgis.com/en/pro-app/sdk/" target="_blank">ArcGIS Pro SDK for .NET (pro.arcgis.com)</a>
