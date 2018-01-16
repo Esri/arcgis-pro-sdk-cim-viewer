@@ -75,7 +75,7 @@
                             <ContextMenu.Resources>
                                 <Style TargetType="MenuItem">
                                     <Setter Property="CommandParameter" 
-                                        Value="{Binding Path=., RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                                        Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                                 </Style>
                             </ContextMenu.Resources>
                             <MenuItem Header="Save" Command="{Binding SaveCommand}" />
