@@ -7,9 +7,9 @@ Language:              C#
 Subject:               Framework, Map Authoring
 Contributor:           ArcGIS Pro SDK Team <arcgisprosdk@esri.com>
 Organization:          Esri, http://www.esri.com
-Date:                  8/3/2016
-ArcGIS Pro:            1.3
-Visual Studio:         2015
+Date:                  1/16/2018
+ArcGIS Pro:            2.1
+Visual Studio:         2017
 .NET Target Framework: .NET Framework 4.6.1
 ```
 
@@ -21,10 +21,14 @@ The Save button will save any changes you make back to the layer, map, scene, or
 
 A second add-in, CIMViewerAnno, has been added to the CIMViewerSolution. CIMViewerAnno adds a dockpane that allows you to view the CIMTextGraphic of annotation features. With at least one annotation layer loaded into the current map, select annotation features to load their CIM (similar to the way the CIMViewer works). You will see a preview image of the selected text graphic along with its CIM definition. You can use the standard Pro select tool or the custom select tool provided with the CIMViewerAnno add-in.
 
-## ArcGIS Pro 2.1
+**You must install Pro SDK 2.1**. This version of the CIM Viewer will not work with earlier versions. They do not contain the layout and annotation APIs.
+
+## ArcGIS Pro 2.1 (minimum requirement)
 
  * Support for layouts and layout elements added
  * A CIMViewerAnno project is added to allow you to view and edit anno text graphics CIM xml.
+ 
+ ![UI](Screenshots/Screen6.png) 
 
 ## CIM Viewer tool and CIMViewerAnno resources
 
@@ -94,8 +98,7 @@ The requirements for the machine on which you develop your ArcGIS Pro add-ins ar
 
 #### ArcGIS Pro
 
-* ArcGIS Pro 1.3  
-* Interested in ArcGIS Pro versions older than 1.3? Read this [ProConcept](https://github.com/Esri/arcgis-pro-sdk-community-samples/wiki/ProConcepts-Working-With-Previous-Versions-of-ArcGIS-Pro)  
+* ArcGIS Pro 2.1  
 
 #### Supported platforms
 
@@ -110,7 +113,7 @@ The requirements for the machine on which you develop your ArcGIS Pro add-ins ar
 
 #### Supported IDEs
 
-* Visual Studio 2015 (Professional, Enterprise, and Community Editions)
+* Visual Studio 2017 (Professional, Enterprise, and Community Editions)
 
 Note: [ArcGIS Pro system requirements](http://pro.arcgis.com/en/pro-app/get-started/arcgis-pro-system-requirements.htm) 
 
@@ -121,7 +124,7 @@ Esri welcomes contributions from anyone and everyone. Please see our [guidelines
 Refer to this [wiki](https://github.com/Esri/arcgis-pro-sdk-community-samples/wiki/ProGuide-Contribute-Samples) for detailed instructions on the ArcGIS Pro SDK Samples submission process.
 
 ## Licensing
-Copyright 2016 Esri
+Copyright 2018 Esri
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -141,7 +144,7 @@ A copy of the license is available in the repository's [license.txt](./License.t
 [](Esri Language: C-Sharp)​
 
 <p align = center><img src="http://esri.github.io/arcgis-pro-sdk/images/ArcGISPro.png"  alt="pre-req" align = "top" height = "20" width = "20" >
-<b> ArcGIS Pro 1.3 SDK for Microsoft .NET Framework</b>
+<b> ArcGIS Pro 2.1 SDK for Microsoft .NET Framework</b>
 </p>
 [Home](https://github.com/Esri/arcgis-pro-sdk/wiki) | <a href="http://pro.arcgis.com/en/pro-app/sdk" target="_blank">ArcGIS Pro SDK</a> | <a href="http://pro.arcgis.com/en/pro-app/sdk/api-reference/index.html" target="_blank">API Reference</a> | [Requirements](#requirements) | [Download](https://github.com/Esri/arcgis-pro-sdk/wiki#installing-arcgis-pro-sdk-for-net) | [Getting Started](https://github.com/Esri/arcgis-pro-sdk/wiki#getting-started) | <a href="http://github.com/esri/arcgis-pro-sdk-community-samples" target="_blank">Samples</a>
 
