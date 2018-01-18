@@ -78,6 +78,8 @@ If your References to the ArcGIS Pro Assemblies in the CIMViewer project are bro
 1. If you make changes to the CIM definition you can use "Preview" to change the preview image on the dockpane without changing the underlying annotation feature.
 1. Select "Save" to apply your changes to the selected annotation feature (assuming you have the appropriate write permissions on the annotation feature class).
 
+Note: Save will fail if you do not have edit permissions on the anno feature class or `annoFeatureClassDef.AreSymbolOverridesAllowed()` returns false.
+
 ## ArcGIS Pro SDK Resources
 
 * [API Reference online](http://pro.arcgis.com/en/pro-app/sdk/api-reference)
@@ -104,7 +106,6 @@ The requirements for the machine on which you develop your ArcGIS Pro add-ins ar
 
 * Windows 10 (Home, Pro, Enterprise, Education) (64 bit [EM64T])  
 * Windows 8.1 Basic, Professional, and Enterprise (64 bit [EM64T]) 
-* Windows 8 Basic, Professional, and Enterprise (64 bit [EM64T]) 
 * Windows 7 SP1 Ultimate, Enterprise, Professional, and Home Premium (64 bit [EM64T]) 
 
 #### Supported .NET framework
