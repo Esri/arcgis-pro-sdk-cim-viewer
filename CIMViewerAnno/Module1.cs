@@ -24,6 +24,7 @@ namespace CIMViewerAnno
     private CIMTextGraphic _selectedGraphic = null;
     private AnnotationLayer _annoLayer = null;
     private static int count = 1;
+    private static string _lasterror = "";
 
     /// <summary>
     /// Retrieve the singleton instance to this module here
@@ -126,15 +127,24 @@ namespace CIMViewerAnno
       return textGraphic;
     }
 
-    public Task ChangeAnnotationTextGraphicAsync(string xmlGraphic)
+    public string LastError => _lasterror;
+
+    public Task<bool> ChangeAnnotationTextGraphicAsync(string xmlGraphic)
     {
+      _lasterror = "";//reset
       if (string.IsNullOrEmpty(xmlGraphic))
-        return Task.FromResult(0);
+        return Task.FromResult(false);
       if (this.AnnotationLayer == null)
-        return Task.FromResult(0);
+        return Task.FromResult(false);
 
-      return QueuedTask.Run(() => {
-
+      return QueuedTask.Run(() =>
+      {
+        if (!((AnnotationFeatureClass) AnnotationLayer.GetFeatureClass()).GetDefinition().AreSymbolOverridesAllowed())
+        {
+          _lasterror = $"Overrides are not allowed on '{AnnotationLayer.GetFeatureClass().GetName()}'";
+          return false;//overrides are not allowed
+        }
+          
         EditOperation op = new EditOperation();
         op.Name = $"Change annotation graphic [{count++}]";
         op.SelectModifiedFeatures = true;
@@ -161,8 +171,10 @@ namespace CIMViewerAnno
           context.Invalidate(annoFeature);
 
         }, this.AnnotationLayer.GetTable());
-
-        op.Execute();
+        var ok = op.Execute();
+        if (!ok)
+          _lasterror = op.ErrorMessage;
+        return ok;
       });
     }
 

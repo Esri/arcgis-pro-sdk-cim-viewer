@@ -142,9 +142,14 @@ namespace CIMViewerAnno.UIX
       get
       {
         return _saveCommand ?? (_saveCommand = new RelayCommand(async () => {
-          await Module1.Current.ChangeAnnotationTextGraphicAsync(this.AvalonTextEditor.Text);
+          var ok = await Module1.Current.ChangeAnnotationTextGraphicAsync(this.AvalonTextEditor.Text);
+          //always do the preview
           _img = await GenerateBitmapImageAsync(this.AvalonTextEditor.Text);
           NotifyPropertyChanged("TextGraphicImageSource");
+          if (!ok) {
+            if (Module1.Current.LastError.Length > 0)
+              MessageBox.Show(Module1.Current.LastError, "Save Failed",MessageBoxButton.OK,MessageBoxImage.Error);
+          }
         }));
       }
     }
