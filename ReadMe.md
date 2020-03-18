@@ -7,10 +7,10 @@ Language:              C#
 Subject:               Framework, Map Authoring
 Contributor:           ArcGIS Pro SDK Team <arcgisprosdk@esri.com>
 Organization:          Esri, http://www.esri.com
-Date:                  1/16/2018
-ArcGIS Pro:            2.1
-Visual Studio:         2017
-.NET Target Framework: .NET Framework 4.6.1
+Date:                  3/16/2020
+ArcGIS Pro:            2.5
+Visual Studio:         2019
+.NET Target Framework: .NET Framework 4.8
 ```
 
 ## Overview
@@ -21,9 +21,9 @@ The Save button will save any changes you make back to the layer, map, scene, or
 
 A second add-in, CIMViewerAnno, has been added to the CIMViewerSolution. CIMViewerAnno adds a dockpane that allows you to view the CIMTextGraphic of annotation features. With at least one annotation layer loaded into the current map, select annotation features to load their CIM (similar to the way the CIMViewer works). You will see a preview image of the selected text graphic along with its CIM definition. You can use the standard Pro select tool or the custom select tool provided with the CIMViewerAnno add-in.
 
-**You must install Pro SDK 2.1**. This version of the CIM Viewer will not work with earlier versions. They do not contain the layout and annotation APIs.
+**You must install Pro SDK 2.5**. This version of the CIM Viewer will not work with earlier versions. They do not contain the layout and annotation APIs.
 
-## ArcGIS Pro 2.1 (minimum requirement)
+## ArcGIS Pro 2.5 (minimum requirement)
 
  * Support for layouts and layout elements added
  * A CIMViewerAnno project is added to allow you to view and edit anno text graphics CIM xml.
@@ -96,27 +96,26 @@ Note: Save will fail if you do not have edit permissions on the anno feature cla
 * Sample data for ArcGIS Pro SDK Community Samples can be downloaded from the [repo releases](https://github.com/Esri/arcgis-pro-sdk-community-samples/releases) page. 
 
 ## Requirements
-The requirements for the machine on which you develop your ArcGIS Pro add-ins are listed here.
+The requirements for the machine on which you develop your ArcGIS Pro add-ins are listed here. 
 
 #### ArcGIS Pro
 
-* ArcGIS Pro 2.1  
+* ArcGIS Pro 2.5 
 
 #### Supported platforms
 
-* Windows 10 (Home, Pro, Enterprise, Education) (64 bit [EM64T])  
-* Windows 8.1 Basic, Professional, and Enterprise (64 bit [EM64T]) 
-* Windows 7 SP1 Ultimate, Enterprise, Professional, and Home Premium (64 bit [EM64T]) 
+* Windows 10 (Home, Pro, Enterprise) (64 bit)
+* Windows 8.1 (Pro, and Enterprise) (64 bit) 
 
 #### Supported .NET framework
 
-* Microsoft .NET Framework 4.6.1 Developer Pack 
+* Microsoft .NET Framework 4.8 Developer Pack
 
 #### Supported IDEs
 
-* Visual Studio 2017 (Professional, Enterprise, and Community Editions)
+* Visual Studio 2019 (Professional, Enterprise, and Community Editions)
 
-Note: [ArcGIS Pro system requirements](http://pro.arcgis.com/en/pro-app/get-started/arcgis-pro-system-requirements.htm) 
+Note: [ArcGIS Pro system requirements](https://pro.arcgis.com/en/pro-app/get-started/arcgis-pro-system-requirements.htm) 
 
 ## Contributing
 
@@ -125,7 +124,7 @@ Esri welcomes contributions from anyone and everyone. Please see our [guidelines
 Refer to this [wiki](https://github.com/Esri/arcgis-pro-sdk-community-samples/wiki/ProGuide-Contribute-Samples) for detailed instructions on the ArcGIS Pro SDK Samples submission process.
 
 ## Licensing
-Copyright 2018 Esri
+Copyright 2020 Esri
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -141,12 +140,6 @@ limitations under the License.
 
 A copy of the license is available in the repository's [license.txt](./License.txt) file.
 
-[](Esri Tags: ArcGIS-Pro-SDK)
-[](Esri Language: C-Sharp)​
-
-<p align = center><img src="http://esri.github.io/arcgis-pro-sdk/images/ArcGISPro.png"  alt="pre-req" align = "top" height = "20" width = "20" >
-<b> ArcGIS Pro 2.1 SDK for Microsoft .NET Framework</b>
-</p>
-[Home](https://github.com/Esri/arcgis-pro-sdk/wiki) | <a href="http://pro.arcgis.com/en/pro-app/sdk" target="_blank">ArcGIS Pro SDK</a> | <a href="http://pro.arcgis.com/en/pro-app/sdk/api-reference/index.html" target="_blank">API Reference</a> | [Requirements](#requirements) | [Download](https://github.com/Esri/arcgis-pro-sdk/wiki#installing-arcgis-pro-sdk-for-net) | [Getting Started](https://github.com/Esri/arcgis-pro-sdk/wiki#getting-started) | <a href="http://github.com/esri/arcgis-pro-sdk-community-samples" target="_blank">Samples</a>
-
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="http://esri.github.io/arcgis-pro-sdk/images/ArcGISPro.png"  alt="ArcGIS Pro SDK for Microsoft .NET Framework" height = "20" width = "20" align="top"  >
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[Home](https://github.com/Esri/arcgis-pro-sdk/wiki) | <a href="http://pro.arcgis.com/en/pro-app/sdk/api-reference" target="_blank">API Reference</a> | [Requirements](https://github.com/Esri/arcgis-pro-sdk/wiki#requirements) | [Download](https://github.com/Esri/arcgis-pro-sdk/wiki#installing-arcgis-pro-sdk-for-net) | <a href="http://github.com/esri/arcgis-pro-sdk-community-samples" target="_blank">Samples</a>
