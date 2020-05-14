@@ -27,14 +27,15 @@ A second add-in, CIMViewerAnno, has been added to the CIMViewerSolution. CIMView
 
  * Support for layouts and layout elements added
  * A CIMViewerAnno project is added to allow you to view and edit anno text graphics CIM xml.
+ * .NET 4.8 and Visual Studio 2019 is required
  
  ![UI](Screenshots/Screen6.png) 
 
-## CIM Viewer tool and CIMViewerAnno resources
+## CIM Viewer tool, CIMViewerAnno, and PreviewSymbol resources
 
-Both add-ins require the [ArcGIS Pro SDK](https://github.com/esri/arcgis-pro-sdk#installing-arcgis-pro-sdk-for-net)
+All add-ins require the [ArcGIS Pro SDK](https://github.com/esri/arcgis-pro-sdk#installing-arcgis-pro-sdk-for-net)
 
-Both add-ins require a third party nuget called AvalonEdit and a third party nuget called Extended.Wpf.Toolkit. 
+All add-ins require a third party nuget called AvalonEdit and a third party nuget called Extended.Wpf.Toolkit. 
 
 * [Avalon Edit nuget](https://www.nuget.org/packages/AvalonEdit)
 * [Extended.Wpf.Toolkit](http://wpftoolkit.codeplex.com/)
@@ -48,8 +49,10 @@ When you first rebuild your solution those nuget are usually updated (or install
 You don't have the NuGet Package Manager installed? Find it [here](https://visualstudiogallery.msdn.microsoft.com/5d345edc-2e2d-4a9c-b73b-d53956dc458d) or go to Tools->Extensions and Updates and search for "NuGet Package Manager"
 You are not familiar with NuGets? Watch [this tutorial](https://www.youtube.com/watch?v=F8sx49NdCNk)
 
+Note: PreviewSymbol uses a Nuget Package reference as opposed to the older "Packages.config". Visual Studio 2019 should be used to build the PreviewSymbol add-in.
+
 **Note:**  
-If your References to the ArcGIS Pro Assemblies in the CIMViewer project are broken (because your ArcGIS Pro is installed to a different location than the CIMViewer references) don't forget to use the [Pro Fix References](https://github.com/esri/arcgis-pro-sdk#arcgis-pro-sdk-for-net-utilities) utility that comes with the Pro SDK to fix them
+If your References to the ArcGIS Pro Assemblies in the CIMViewer solution are broken (because your ArcGIS Pro is installed to a different location than the CIMViewer add-in projects reference) don't forget to use the [Pro Fix References](https://github.com/esri/arcgis-pro-sdk#arcgis-pro-sdk-for-net-utilities) utility that comes with the Pro SDK to fix them
 
 ![ProSDK](Screenshots/pro_fix1.png)
 
@@ -79,6 +82,19 @@ If your References to the ArcGIS Pro Assemblies in the CIMViewer project are bro
 1. Select "Save" to apply your changes to the selected annotation feature (assuming you have the appropriate write permissions on the annotation feature class).
 
 Note: Save will fail if you do not have edit permissions on the anno feature class or `annoFeatureClassDef.AreSymbolOverridesAllowed()` returns false.
+
+## PreviewSymbol tool
+
+1. Make sure you have the add-in built and available
+1. Start ArcGIS Pro
+1. Open any project that has feature layers
+1. Open the CIMPreviewSymbol dockpane
+1. Select any feature to load its symbol into the viewer
+![UI](Screenshots/Screen5.png)
+1. If you make changes to the CIM definition of the symbol you can use "Preview" to view those changes on the dockpane.
+1. Select "Reset" to set the content back to the "original" selected symbol.
+1. Use PreviewSymbol to help you understand the internal structure of CIM Symbols. It does _not_ apply any edits to the symbol CIM back to the selected feature.
+
 
 ## ArcGIS Pro SDK Resources
 
