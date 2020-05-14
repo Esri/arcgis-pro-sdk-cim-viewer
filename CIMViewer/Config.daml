@@ -12,7 +12,7 @@
 //   limitations under the License. 
 -->
 <ArcGIS defaultAssembly="CIMViewer.dll" defaultNamespace="CIMViewer" xmlns="http://schemas.esri.com/DADF/Registry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Program%20Files/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
-  <AddInInfo id="{3b62f119-0de4-4d97-b33c-357e52ebb5f9}" version="1.0" desktopVersion="2.0">
+  <AddInInfo id="{3b62f119-0de4-4d97-b33c-357e52ebb5f9}" version="1.1" desktopVersion="2.5">
     <Name>CIMViewer</Name>
     <Description>CIMViewer description</Description>
     <Image>Images\AddinDesktop32.png</Image>
