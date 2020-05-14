@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIMViewer", "CIMViewer\CIMViewer.csproj", "{3B62F119-0DE4-4D97-B33C-357E52EBB5F9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIMViewerAnno", "CIMViewerAnno\CIMViewerAnno.csproj", "{0F86E958-DC71-4101-89C1-9594D7FA6CFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PreviewSymbol", "PreviewSymbol\PreviewSymbol.csproj", "{254B96B4-610F-4D18-8863-F652904766DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +23,15 @@ Global
 		{0F86E958-DC71-4101-89C1-9594D7FA6CFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F86E958-DC71-4101-89C1-9594D7FA6CFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F86E958-DC71-4101-89C1-9594D7FA6CFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{254B96B4-610F-4D18-8863-F652904766DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{254B96B4-610F-4D18-8863-F652904766DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{254B96B4-610F-4D18-8863-F652904766DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{254B96B4-610F-4D18-8863-F652904766DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CC6214FF-CEA2-4063-886E-B6368B1F9350}
 	EndGlobalSection
 EndGlobal
