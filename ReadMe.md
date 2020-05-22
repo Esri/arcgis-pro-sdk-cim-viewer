@@ -7,7 +7,7 @@ Language:              C#
 Subject:               Framework, Map Authoring
 Contributor:           ArcGIS Pro SDK Team <arcgisprosdk@esri.com>
 Organization:          Esri, http://www.esri.com
-Date:                  3/16/2020
+Date:                  5/14/2020
 ArcGIS Pro:            2.5
 Visual Studio:         2019
 .NET Target Framework: .NET Framework 4.8
@@ -90,7 +90,7 @@ Note: Save will fail if you do not have edit permissions on the anno feature cla
 1. Open any project that has feature layers
 1. Open the CIMPreviewSymbol dockpane
 1. Select any feature to load its symbol into the viewer
-![UI](Screenshots/Screen5.png)
+![UI](Screenshots/Screen7.png)
 1. If you make changes to the CIM definition of the symbol you can use "Preview" to view those changes on the dockpane.
 1. Select "Reset" to set the content back to the "original" selected symbol.
 1. Use PreviewSymbol to help you understand the internal structure of CIM Symbols. It does _not_ apply any edits to the symbol CIM back to the selected feature.
