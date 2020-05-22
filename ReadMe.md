@@ -87,9 +87,10 @@ Note: Save will fail if you do not have edit permissions on the anno feature cla
 
 1. Make sure you have the add-in built and available
 1. Start ArcGIS Pro
-1. Open any project that has feature layers
+1. Open any project that has feature layers and/or anno layers
 1. Open the CIMPreviewSymbol dockpane
-1. Select any feature to load its symbol into the viewer
+1. Select any feature or anno feature to load its symbol into the viewer
+1. If you select an anno feature _and_ a vector feature then the anno feature takes precedence
 ![UI](Screenshots/Screen7.png)
 1. If you make changes to the CIM definition of the symbol you can use "Preview" to view those changes on the dockpane.
 1. Select "Reset" to set the content back to the "original" selected symbol.
