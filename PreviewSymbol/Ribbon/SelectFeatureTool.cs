@@ -5,10 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using ArcGIS.Core.CIM;
 using ArcGIS.Core.Data;
+using ArcGIS.Core.Data.Mapping;
 using ArcGIS.Core.Geometry;
 using ArcGIS.Desktop.Catalog;
 using ArcGIS.Desktop.Core;
 using ArcGIS.Desktop.Editing;
+using ArcGIS.Desktop.Editing.Attributes;
 using ArcGIS.Desktop.Extensions;
 using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Contracts;
@@ -45,6 +47,11 @@ namespace PreviewSymbol.Ribbon
 			await QueuedTask.Run(() => {
 				var result = MapView.Active.SelectFeatures(geometry);
 
+				_msg = "No basic feature layers selected";
+
+				//first anno layer (if there is one)
+				var annoLayer = result.Keys.OfType<AnnotationLayer>().FirstOrDefault();
+
 				//get the first feature layer that supports symbol lookup
 				var symbolLayer = result.Keys.FirstOrDefault(layer =>
 				{
@@ -56,21 +63,34 @@ namespace PreviewSymbol.Ribbon
 					return false;
 				}) as FeatureLayer;
 
-				#region Do the Symbol Lookup
-				if (symbolLayer == null)
+				//Annotation takes precedence...
+				if (annoLayer != null)
 				{
-					_msg = "No feature layers selected";
-					return;
+					_name = annoLayer.Name;
+					_featureOID = result[annoLayer][0];
+					_msg = $"anno feature {_featureOID}";
+					var qf = new QueryFilter()
+					{
+						ObjectIDs = new List<long> { _featureOID }
+					};
+
+					var rowcursor = annoLayer.GetSelection().Search(qf);
+					if (rowcursor.MoveNext())
+					{
+						var af = rowcursor.Current as AnnotationFeature;
+						var graphic = af.GetGraphic() as CIMTextGraphic;
+						_symbol = graphic.Symbol.Symbol;
+					}
+					rowcursor.Dispose();
 				}
-				//get the first selected feature's oid
-				_name = symbolLayer.Name;
-				_featureOID = result[symbolLayer][0];
-				#endregion
-
-				_symbol = symbolLayer.LookupSymbol(_featureOID, MapView.Active);
-
+				else if (symbolLayer != null)
+				{
+					_name = symbolLayer.Name;
+					_featureOID = result[symbolLayer][0];
+					_msg = $"feature {_featureOID}";
+					_symbol = symbolLayer.LookupSymbol(_featureOID, MapView.Active);
+				}
 			});
-
 
 			Module1.Current.SetSelectedSymbol(_symbol, _name, _featureOID, _msg);
 			return true;
