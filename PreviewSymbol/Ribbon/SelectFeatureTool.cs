@@ -16,6 +16,7 @@ using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Contracts;
 using ArcGIS.Desktop.Framework.Dialogs;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
+using ArcGIS.Desktop.Layouts;
 using ArcGIS.Desktop.Mapping;
 
 namespace PreviewSymbol.Ribbon
@@ -28,26 +29,66 @@ namespace PreviewSymbol.Ribbon
 		private CIMSymbol _symbol = null;
 		private string _msg = "";
 
+		private double _bufferDist = 0;
+		private CIMSymbolReference _polyOutline = null;
+
 		public SelectFeatureTool()
 		{
 			IsSketchTool = true;
-			SketchType = SketchGeometryType.Rectangle;
+			SketchType = SketchGeometryType.Point;
 			SketchOutputMode = SketchOutputMode.Map;
 			this.CompleteSketchOnMouseUp = true;
 		}
 
 		protected override Task OnToolActivateAsync(bool active)
 		{
-			return base.OnToolActivateAsync(active);
+			if (MapView.Active.Map.IsScene)
+			{
+				MessageBox.Show("PreviewSymbol is for 2D maps only", "Warning");
+				return Task.FromResult(0);
+			}
+			var center = MapView.Active.Extent.Center;
+			return QueuedTask.Run(() =>
+			{
+				if (_polyOutline == null)
+				{
+					_polyOutline = SymbolFactory.Instance.ConstructPolygonSymbol(
+													 null, SymbolFactory.Instance.ConstructStroke(
+														 ColorFactory.Instance.BlueRGB, 1.5)).MakeSymbolReference();
+				}
+				var clientPt = MapView.Active.MapToClient(MapView.Active.Extent.Center);
+				clientPt.X += SelectionEnvironment.SelectionTolerance;
+				var mapPt = MapView.Active.ClientToMap(clientPt);
+				_bufferDist = Math.Abs(center.X - mapPt.X);
+			});
 		}
 
 		protected async override Task<bool> OnSketchCompleteAsync(Geometry geometry)
 		{
 			Reset();
-			await QueuedTask.Run(() => {
-				var result = MapView.Active.SelectFeatures(geometry);
+			if (MapView.Active.Map.IsScene)
+				return false;
 
-				_msg = "No basic feature layers selected";
+			var mv = MapView.Active;
+			Geometry sel_geom = null;
+			IDisposable sel_graphic = null;
+			//Flash the selection geometry so we can see where we clicked
+			QueuedTask.Run(() =>
+			{
+				sel_geom = GeometryEngine.Instance.Buffer(geometry, _bufferDist) as Polygon;
+				sel_graphic = mv.AddOverlay(sel_geom, _polyOutline);
+			});
+
+			
+
+			await QueuedTask.Run(() => {
+
+				var result = MapView.Active.SelectFeatures(
+					sel_geom, SelectionCombinationMethod.New, false, false);
+				var result2 = MapView.Active.SelectElements(
+					sel_geom, SelectionCombinationMethod.New, false);
+
+				_msg = "No basic feature layers or graphics layers selected";
 
 				//first anno layer (if there is one)
 				var annoLayer = result.Keys.OfType<AnnotationLayer>().FirstOrDefault();
@@ -63,8 +104,19 @@ namespace PreviewSymbol.Ribbon
 					return false;
 				}) as FeatureLayer;
 
-				//Annotation takes precedence...
-				if (annoLayer != null)
+				sel_graphic?.Dispose();
+
+				//Graphics Layer takes precedence...
+				if (result2.Count > 0)
+				{
+					var elem = result2.First() as GraphicElement;
+					_symbol = elem.GetGraphic().Symbol.Symbol;
+					_name = ((GraphicsLayer)elem.GetParent()).Name;
+					_featureOID = -1;
+					_msg = $"Graphic element {elem.Name}";
+				}
+				//Then Annotation...
+				else if (annoLayer != null)
 				{
 					_name = annoLayer.Name;
 					_featureOID = result[annoLayer][0];
@@ -83,6 +135,7 @@ namespace PreviewSymbol.Ribbon
 					}
 					rowcursor.Dispose();
 				}
+				//Then anything else...
 				else if (symbolLayer != null)
 				{
 					_name = symbolLayer.Name;
