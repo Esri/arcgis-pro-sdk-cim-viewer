@@ -18,6 +18,7 @@ using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Contracts;
 using ArcGIS.Desktop.Framework.Dialogs;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
+using ArcGIS.Desktop.Layouts;
 using ArcGIS.Desktop.Mapping;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Folding;
@@ -32,6 +33,7 @@ namespace PreviewSymbol.UIX
 		private FoldingManager _foldingManager;
 		private XmlFoldingStrategy _xmlFolding;
 		private CIMSymbol _selectedSymbol = null;
+		private GraphicElement _selectedElement = null;
 
 		private ImageSource _img;
 		private string _msg = "Select a symbol";
@@ -43,14 +45,19 @@ namespace PreviewSymbol.UIX
 		{
 			SelectedSymbolChangedEvent.Subscribe((args) =>
 			{
-				_selectedSymbol = args.SelectedSymbol;
+				if (!LockSymbolPreview || _selectedSymbol == null)
+					_selectedSymbol = args.SelectedSymbol;
+				_selectedElement = args.SelectedElement;
 				string msg = "";
 				if (args.SelectedOID >= 0)
 				{
-					msg = $"{args.SelectedFeatureLayer}: {args.SelectedOID}";
+					msg = $"{args.SelectedLayerName}: {args.SelectedOID}";
 				}
-				SetXmlText(_selectedSymbol);
-				RefreshSymbol(_selectedSymbol, msg, true);
+				if (!LockSymbolPreview)
+				{
+					SetXmlText(_selectedSymbol);
+					RefreshSymbol(_selectedSymbol, msg, true);
+				}
 			});
 			return Task.FromResult(0);
 		}
@@ -64,23 +71,46 @@ namespace PreviewSymbol.UIX
 
 		public ImageSource SymbolImageSource => _img;
 
+		public bool LockSymbolPreview
+		{
+			get
+			{
+				return Module1.Current.LockSymbolPreview;
+			}
+			set
+			{
+				if (Module1.Current.LockSymbolPreview != value)
+				{
+					Module1.Current.LockSymbolPreview = value;
+					NotifyPropertyChanged("");
+				}
+			}
+		}
+
 		public string Message => _msg;
 
 		#region Commands
 
 		ICommand _refreshCommand;
 		ICommand _selectCommand;
+		ICommand _previewCommand;
 		ICommand _applyCommand;
 		ICommand _changeFontSizeCommand;
+		ICommand _updateFoldings;
 
 		public ICommand RefreshCommand
 		{
 			get
 			{
 				return _refreshCommand ?? (_refreshCommand = new RelayCommand(() => {
-					_selectedSymbol = Module1.Current.SelectedSymbol;
-					SetXmlText(_selectedSymbol);
-					RefreshSymbol(_selectedSymbol, "");
+					if (!LockSymbolPreview)
+						_selectedSymbol = Module1.Current.SelectedSymbol;
+					_selectedElement = Module1.Current.SelectedElement;
+					if (!LockSymbolPreview)
+					{
+						SetXmlText(_selectedSymbol);
+						RefreshSymbol(_selectedSymbol, "");
+					}
 				}));
 			}
 		}
@@ -100,6 +130,48 @@ namespace PreviewSymbol.UIX
 			get
 			{
 				return _applyCommand ?? (_applyCommand = new RelayCommand(() => {
+					if (_selectedElement == null)
+					{
+						ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show("No graphic element was selected", "Apply failed");
+						return;
+					}
+					var xml = this.AvalonTextEditor.Text;
+					if (ValidateXML(xml))
+					{
+						_selectedSymbol = GenerateSymbol(xml);
+						RefreshSymbol(_selectedSymbol, "");
+						QueuedTask.Run(() =>
+						{
+							//If user locked the preview then it is their
+							//responsibility to ensure that the selected element
+							//matches the current symbol type
+							var graphic = _selectedElement.GetGraphic();
+							try
+							{
+								graphic.Symbol.Symbol = _selectedSymbol;
+								_selectedElement.SetGraphic(graphic);
+							}
+							catch(Exception ex)
+							{
+								//we are not on the UI thread here
+								System.Diagnostics.Debug.WriteLine(ex.ToString());
+							}
+						});
+					}
+					else
+					{
+						var msg = $"Invalid xml\r\n{_xmlerror}";
+						ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(msg, "Preview failed");
+					}
+				}, () => _selectedElement != null));
+			}
+		}
+
+		public ICommand PreviewCommand
+		{
+			get
+			{
+				return _previewCommand ?? (_previewCommand = new RelayCommand(() => {
 					var xml = this.AvalonTextEditor.Text;
 					if (ValidateXML(xml))
 					{
@@ -124,10 +196,31 @@ namespace PreviewSymbol.UIX
 			}
 		}
 
+		public ICommand UpdateFoldingsCommand
+		{
+			get
+			{
+				return _updateFoldings ?? (_updateFoldings = new RelayCommand(() =>
+				{
+					if (!string.IsNullOrEmpty(this.AvalonTextEditor.Text))
+						this._xmlFolding.UpdateFoldings(this._foldingManager, this.AvalonTextEditor.Document);
+				}));
+			}
+		}
+
+		PreviewControlCommand _cutCommand;
 		PreviewControlCommand _copyCommand;
 		PreviewControlCommand _pasteCommand;
 		PreviewControlCommand _undoCommand;
 		PreviewControlCommand _redoCommand;
+
+		public PreviewControlCommand CutCommand
+		{
+			get
+			{
+				return _cutCommand ?? (_cutCommand = new PreviewControlCommand(ApplicationCommands.Cut));
+			}
+		}
 
 		public PreviewControlCommand CopyCommand
 		{
@@ -244,8 +337,8 @@ namespace PreviewSymbol.UIX
 				var si = new SymbolStyleItem()
 				{
 					Symbol = symbol,
-					PatchHeight = 64,
-					PatchWidth = 64
+					PatchHeight = 80,
+					PatchWidth = 80
 				};
 				var bm = si.PreviewImage as BitmapSource;
 				bm.Freeze();

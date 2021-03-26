@@ -190,6 +190,12 @@ namespace CIMViewer
           return;
         CIMViewerModule.IgnoreEvents = true;
 
+        var hints = new List<string>();
+        foreach (var hint in args.EventHints)
+          hints.Add(hint.ToString());
+        var hint_string = string.Join(",", hints);
+        System.Diagnostics.Debug.WriteLine($"MapMemberPropertiesChangedEvent {hint_string}");
+
         if (_cimService != null && _cimService.ServiceType == CIMServiceType.MapMember) {
           foreach (var mm in args.MapMembers) {
             if (mm.URI == _cimService.URI) {
@@ -215,6 +221,37 @@ namespace CIMViewer
         }
         CIMViewerModule.IgnoreEvents = false;
       });
+      //New events for Voxel
+      ArcGIS.Desktop.Mapping.Voxel.Events.VoxelAssetChangedEvent.Subscribe((args) =>
+      {
+        System.Diagnostics.Debug.WriteLine($"VoxelAssetChangedEvent {args.AssetType.ToString()}");
+
+        if (CIMViewerModule.IgnoreEvents)
+          return;
+        CIMViewerModule.IgnoreEvents = true;
+
+        //there will only be one (or none) selected...
+        var surface = MapView.Active.GetSelectedIsosurfaces().FirstOrDefault();
+        var slice = MapView.Active.GetSelectedSlices().FirstOrDefault();
+        var section = MapView.Active.GetSelectedSections().FirstOrDefault();
+        var locked_section = MapView.Active.GetSelectedLockedSections().FirstOrDefault();
+
+        if (surface != null)
+          CIMService = new MapMemberService(surface.Layer);
+        else if (slice != null)
+          CIMService = new MapMemberService(slice.Layer);
+        else if (section != null)
+          CIMService = new MapMemberService(section.Layer);
+        else if (locked_section != null)
+          CIMService = new MapMemberService(locked_section.Layer);
+        else
+				{
+          SetMapMember(MapView.Active);
+        }
+        
+        CIMViewerModule.IgnoreEvents = false;
+      });
+
       #endregion Map
     }
 

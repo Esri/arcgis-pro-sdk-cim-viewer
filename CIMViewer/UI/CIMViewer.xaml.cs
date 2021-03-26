@@ -165,6 +165,7 @@ namespace CIMViewer.UI
     ICommand _clearCommand;
     ICommand _validateCommand;
     ICommand _changeFontSizeCommand;
+    ICommand _updateFoldingsCommand;
 
 
     public ICommand RefreshCommand
@@ -241,6 +242,19 @@ namespace CIMViewer.UI
       {
         return _changeFontSizeCommand ?? (_changeFontSizeCommand = new RelayCommand(
             (Action<object>)ChangeTextSize, (Func<bool>)(() => { return true; })));
+      }
+    }
+
+    public ICommand UpdateFoldingsCommand
+    {
+      get
+      {
+        return _updateFoldingsCommand ?? (_updateFoldingsCommand = new RelayCommand(
+            () => {
+              if (!string.IsNullOrEmpty(this.AvalonTextEditor.Text))
+                this._xmlFolding.UpdateFoldings(this._foldingManager, this.AvalonTextEditor.Document);
+            }
+          ));
       }
     }
 
