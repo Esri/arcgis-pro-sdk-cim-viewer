@@ -60,11 +60,14 @@ namespace CIMViewer
       //});
 
       ArcGIS.Desktop.Layouts.Events.LayoutClosedEvent.Subscribe((args) => {
+        if (CIMViewerModule.IgnoreEvents)
+          return;
+
         if (_cimService != null && (_cimService.ServiceType == CIMServiceType.Layout ||
                                     _cimService.ServiceType == CIMServiceType.LayoutElement)) {
           //assume we are showing the active layout or an element on it
-          if (FrameworkApplication.Panes.Count == 0 ||
-              FrameworkApplication.Panes.OfType<ILayoutPane>().Count() == 0)
+          if (FrameworkApplication.Panes.Count == 0)
+            // || FrameworkApplication.Panes.OfType<ILayoutPane>().Count() == 0
             lock (this) {
               CIMService = null;
             }
@@ -72,12 +75,15 @@ namespace CIMViewer
       });
 
       ArcGIS.Desktop.Layouts.Events.LayoutViewEvent.Subscribe((args) => {
+        if (CIMViewerModule.IgnoreEvents)
+          return;
+
         if (args.Type == LayoutViewEventType.Initialized) {
           if (LayoutView.Active != null) {
             lock (this) {
-              CIMService = null;
-              if (LayoutView.Active.Layout != null)
-                CIMService = new LayoutService(LayoutView.Active.Layout);
+               CIMService = LayoutView.Active.Layout != null ?
+                                   new LayoutService(LayoutView.Active.Layout) :
+                                   null;
             }
           }
         }
@@ -86,42 +92,123 @@ namespace CIMViewer
 
       //A layout or layout element has been selected in the TOC
       ArcGIS.Desktop.Layouts.Events.LayoutSelectionChangedEvent.Subscribe((args) => {
+
+        if (LayoutView.Active == null)
+          return;
+        if (CIMViewerModule.IgnoreEvents)
+          return;
+
         if (args.Elements == null || args.Elements.Count() == 0) {
           //The layout itself has been selected
           var layout = LayoutView.Active?.Layout;
           if (layout != null) {
-            CIMService = new LayoutService(layout);
+            lock(this)
+              CIMService = new LayoutService(layout);
           }
         }
         else {
           //take the first element
-          CIMService = new LayoutElementService(args.Elements.First());
+          lock(this)
+            CIMService = new LayoutElementService(args.Elements.First());
         }
       });
 
       ArcGIS.Desktop.Layouts.Events.ElementsPlacementChangedEvent.Subscribe((args) => {
-        SetLayoutElement(args.ElementNames);
+        if (CIMViewerModule.IgnoreEvents)
+          return;
+
+        if (_cimService != null &&
+            _cimService.ServiceType == CIMServiceType.LayoutElement)
+        {
+          if (LayoutView.Active != null)
+          {
+            SetLayoutElement(args.Elements);
+          }
+        }
       });
 
       ArcGIS.Desktop.Layouts.Events.ElementsUpdatedEvent.Subscribe((args) => {
-        SetLayoutElement(args.ElementNames);
+        if (CIMViewerModule.IgnoreEvents)
+          return;
+
+        if (_cimService != null &&
+            _cimService.ServiceType == CIMServiceType.LayoutElement)
+        {
+          if (LayoutView.Active != null)
+          {
+            SetLayoutElement(args.Elements);
+          }
+        }
       });
 
       ArcGIS.Desktop.Layouts.Events.PageChangedEvent.Subscribe((args) => {
+        if (CIMViewerModule.IgnoreEvents)
+          return;
 
         if (_cimService != null &&
             _cimService.ServiceType == CIMServiceType.LayoutElement) {
           if (LayoutView.Active != null) {
             if (LayoutView.Active.Layout.URI == _cimService.URI)
-              CIMService = new LayoutService(LayoutView.Active.Layout);
+              lock(this)
+                CIMService = new LayoutService(LayoutView.Active.Layout);
           }
         }
       });
 
       #endregion
+
+      #region Reports
+
+      ArcGIS.Desktop.Layouts.Reports.Events.ReportDataSourceChangedEvent.Subscribe((args) =>
+      {
+        if (LayoutView.Active == null)
+          return;
+        if (CIMViewerModule.IgnoreEvents)
+          return;
+
+        lock (this)
+				{
+          if (args.ReportSectionElement != null)
+            CIMService = new LayoutElementService(args.ReportSectionElement);
+          else if (args.Report != null)
+            CIMService = new LayoutService(LayoutView.Active.Layout);
+        }
+      });
+
+      ArcGIS.Desktop.Layouts.Reports.Events.ReportPropertyChangedEvent.Subscribe((args) =>
+      {
+        if (LayoutView.Active == null)
+          return;
+        if (CIMViewerModule.IgnoreEvents)
+          return;
+
+        lock (this)
+          CIMService = new LayoutService(LayoutView.Active.Layout);
+      });
+
+      ArcGIS.Desktop.Layouts.Reports.Events.ReportSectionChangedEvent.Subscribe((args) =>
+      {
+        if (LayoutView.Active == null)
+          return;
+        if (CIMViewerModule.IgnoreEvents)
+          return;
+
+        lock (this)
+        {
+          if (args.ReportSectionElement != null)
+            CIMService = new LayoutElementService(args.ReportSectionElement);
+          else if (args.Report != null)
+            CIMService = new LayoutService(LayoutView.Active.Layout);
+        }
+      });
+      #endregion
+
       #region Map
       //The map is deleted from the Project dockpane
       ArcGIS.Desktop.Mapping.Events.MapRemovedEvent.Subscribe((args) => {
+        if (CIMViewerModule.IgnoreEvents)
+          return;
+
         lock (this) {
           if (CIMService != null && CIMService.ServiceType == CIMServiceType.Map) {
             if (args.MapPath == CIMService.URI) {
@@ -133,44 +220,52 @@ namespace CIMViewer
       });
       //The MapPane is closed
       ArcGIS.Desktop.Mapping.Events.MapClosedEvent.Subscribe((args) => {
-        lock (this) {
-          if (CIMService != null && CIMService.ServiceType == CIMServiceType.Map) {
-            if (args.MapPane.MapView != null) {//I think MapView is always valid here
-              if (args.MapPane.MapView.Map.URI == CIMService.URI) {
-                //this affects our map
-                CIMService = null;//just do it when our map is closed
-              }
-            }
-            else if (FrameworkApplication.Panes.Count == 0 ||
-                     FrameworkApplication.Panes.OfType<IMapPane>().Count() == 0) {
-              CIMService = null;//There are no more maps
-            }
-          }
+        if (CIMViewerModule.IgnoreEvents)
+          return;
 
+        if (CIMService != null && CIMService.ServiceType == CIMServiceType.Map)
+        {
+          //if (args.MapPane.MapView != null) {//I think MapView is always valid here
+          //  if (args.MapPane.MapView.Map.URI == CIMService.URI) {
+          //    //this affects our map
+          //    CIMService = null;//just do it when our map is closed
+          //  }
+          //}
+          if (FrameworkApplication.Panes.Count == 0)
+          {
+            //|| FrameworkApplication.Panes.OfType<IMapPane>().Count() == 0
+            lock (this)
+              CIMService = null;//There are no more maps
+          }
         }
       });
       ArcGIS.Desktop.Mapping.Events.TOCSelectionChangedEvent.Subscribe((args) => {
+        //this event also comes through on Layout
+        if (MapView.Active == null)
+          return;
+      
         if (CIMViewerModule.IgnoreEvents)
           return;
-        CIMViewerModule.IgnoreEvents = true;
+
         SetMapMember(args.MapView);
-        CIMViewerModule.IgnoreEvents = false;
+
       });
+
       ArcGIS.Desktop.Mapping.Events.ActiveMapViewChangedEvent.Subscribe((args) => {
         if (CIMViewerModule.IgnoreEvents)
           return;
-        CIMViewerModule.IgnoreEvents = true;
-        if (args.OutgoingView != null)
-          CIMService = null;
-        else if (args.IncomingView != null)
+
+        //if (args.OutgoingView != null && 
+        //(_cimService?.ServiceType == CIMServiceType.Map || _cimService?.ServiceType == CIMServiceType.MapMember))
+        //  CIMService = null;
+
+        //This can fire for a map on a layout if the layout is being activated...
+        if (args.IncomingView != null)
           SetMapMember(args.IncomingView);
-        CIMViewerModule.IgnoreEvents = false;
       });
 
       ArcGIS.Desktop.Mapping.Events.MapPropertyChangedEvent.Subscribe((args) => {
-        if (CIMViewerModule.IgnoreEvents)
-          return;
-        CIMViewerModule.IgnoreEvents = true;
+
         if (_cimService != null &&
             _cimService.ServiceType == CIMServiceType.Map) {
           //we have a map definition loaded
@@ -178,57 +273,59 @@ namespace CIMViewer
             if (map.URI == _cimService.URI) {
               //our map is one of the maps that changed
               //refresh it
-              CIMService = new MapService(map);
+              lock (this)
+                CIMService = new MapService(map);
               break;
             }
           }
         }
-        CIMViewerModule.IgnoreEvents = false;
+
       });
+
       ArcGIS.Desktop.Mapping.Events.MapMemberPropertiesChangedEvent.Subscribe((args) => {
-        if (CIMViewerModule.IgnoreEvents)
-          return;
-        CIMViewerModule.IgnoreEvents = true;
 
         var hints = new List<string>();
         foreach (var hint in args.EventHints)
           hints.Add(hint.ToString());
         var hint_string = string.Join(",", hints);
-        System.Diagnostics.Debug.WriteLine($"MapMemberPropertiesChangedEvent {hint_string}");
 
         if (_cimService != null && _cimService.ServiceType == CIMServiceType.MapMember) {
           foreach (var mm in args.MapMembers) {
             if (mm.URI == _cimService.URI) {
               //refresh
-              CIMService = new MapMemberService(mm);
+              lock (this)
+                CIMService = new MapMemberService(mm);
               break;
             }
           }
         }
-        CIMViewerModule.IgnoreEvents = false;
       });
+
       ArcGIS.Desktop.Mapping.Events.LayersRemovedEvent.Subscribe((args) => {
         if (CIMViewerModule.IgnoreEvents)
           return;
-        CIMViewerModule.IgnoreEvents = true;
 
         if (_cimService != null && _cimService.ServiceType == CIMServiceType.MapMember) {
           foreach (var layer in args.Layers) {
             if (layer.URI == _cimService.URI) {
-              CIMService = null;
+              lock (this)
+                CIMService = null;
             }
           }
         }
-        CIMViewerModule.IgnoreEvents = false;
       });
+
       //New events for Voxel
       ArcGIS.Desktop.Mapping.Voxel.Events.VoxelAssetChangedEvent.Subscribe((args) =>
       {
-        System.Diagnostics.Debug.WriteLine($"VoxelAssetChangedEvent {args.AssetType.ToString()}");
+        if (_cimService != null && _cimService.ServiceType != CIMServiceType.MapMember)
+          return;
 
+        var vxl_layer = MapView.Active?.GetSelectedLayers().OfType<VoxelLayer>();
+        if (vxl_layer == null)
+          return;
         if (CIMViewerModule.IgnoreEvents)
           return;
-        CIMViewerModule.IgnoreEvents = true;
 
         //there will only be one (or none) selected...
         var surface = MapView.Active.GetSelectedIsosurfaces().FirstOrDefault();
@@ -237,69 +334,91 @@ namespace CIMViewer
         var locked_section = MapView.Active.GetSelectedLockedSections().FirstOrDefault();
 
         if (surface != null)
-          CIMService = new MapMemberService(surface.Layer);
+          lock (this)
+            CIMService = new MapMemberService(surface.Layer);
         else if (slice != null)
-          CIMService = new MapMemberService(slice.Layer);
+          lock (this)
+            CIMService = new MapMemberService(slice.Layer);
         else if (section != null)
-          CIMService = new MapMemberService(section.Layer);
+          lock (this)
+            CIMService = new MapMemberService(section.Layer);
         else if (locked_section != null)
-          CIMService = new MapMemberService(locked_section.Layer);
+          lock (this)
+            CIMService = new MapMemberService(locked_section.Layer);
         else
 				{
           SetMapMember(MapView.Active);
         }
-        
-        CIMViewerModule.IgnoreEvents = false;
       });
 
       #endregion Map
+
+      #region Pane
+
+      //There is no view activation for layout/report
+      ArcGIS.Desktop.Framework.Events.ActivePaneChangedEvent.Subscribe((args) =>
+      {
+        if (CIMViewerModule.IgnoreEvents)
+          return;
+
+        if (args.IncomingPane is ILayoutPane)
+				{
+          var layoutPane = args.IncomingPane as ILayoutPane;
+          lock (this)
+          {
+            CIMService = new LayoutService(layoutPane.LayoutView.Layout);
+          }
+				}
+      });
+
+      #endregion
     }
 
-    private void SetMapMember(MapView mv)
+		private void SetMapMember(MapView mv)
     {
       bool changed = false;
       if (mv != null) {
         //Was a layer selected?
         var layer = mv.GetSelectedLayers().FirstOrDefault();
         if (layer != null) {
-          CIMService = new MapMemberService(layer);
+          lock(this)
+            CIMService = new MapMemberService(layer);
           changed = true;
         }
         else {
           //Was a table selected?
           var table = mv.GetSelectedStandaloneTables().FirstOrDefault();
           if (table != null) {
-            CIMService = new MapMemberService(table);
+            lock (this)
+              CIMService = new MapMemberService(table);
             changed = true;
           }
           else {
             //A Map must have been selected
-            CIMService = new MapService(mv.Map);
+            lock (this)
+              CIMService = new MapService(mv.Map);
             changed = true;
           }
         }
       }
       if (!changed && CIMService != null) {
-        CIMService = null;
+        lock (this)
+          CIMService = null;
       }
     }
 
-    private void SetLayoutElement(string[] elemNames)
+    private void SetLayoutElement(IEnumerable<Element> elements)
     {
       if (_cimService != null &&
           _cimService.ServiceType == CIMServiceType.LayoutElement) {
         //we have a layout element loaded
-        var names = elemNames?.ToList() ?? new List<string>();
-        if (names.Contains(_cimService.URI)) {
-          //refresh our item
-          var layout = LayoutView.Active?.Layout;
-          var elem = layout?.Elements.FirstOrDefault(e => e.Name == _cimService.URI);
-          lock (this) {
-            CIMService = elem != null ? new LayoutElementService(elem) : null;
-          }
-
+        //refresh our item
+        var layout = LayoutView.Active?.Layout;
+        var elem = elements.FirstOrDefault(e => e.Name == _cimService.URI);
+        lock (this)
+        {
+          CIMService = elem != null ? new LayoutElementService(elem) : null;
         }
-
       }
     }
 
@@ -311,14 +430,12 @@ namespace CIMViewer
       }
       set
       {
-        CIMViewerModule.IgnoreEvents = true;
         SetProperty(ref _cimService, value, () => CIMService);
         if (_cimService == null)
           this.Caption = _originalCaption;
         else {
           this.Caption = string.Format("{0} - {1}", _originalCaption, _cimService.URI);
         }
-        CIMViewerModule.IgnoreEvents = false;
       }
     }
 
