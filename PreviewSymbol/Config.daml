@@ -1,5 +1,5 @@
 ﻿<ArcGIS defaultAssembly="PreviewSymbol.dll" defaultNamespace="PreviewSymbol" xmlns="http://schemas.esri.com/DADF/Registry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Program%20Files/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
-  <AddInInfo id="{254b96b4-610f-4d18-8863-f652904766de}" version="1.0" desktopVersion="2.5">
+  <AddInInfo id="{254b96b4-610f-4d18-8863-f652904766de}" version="1.0" desktopVersion="2.8">
     <Name>PreviewSymbol</Name>
     <Description>PreviewSymbol description</Description>
     <Image>Images\AddinDesktop32.png</Image>
