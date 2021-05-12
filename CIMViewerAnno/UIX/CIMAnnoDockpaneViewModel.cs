@@ -15,9 +15,7 @@ namespace CIMViewerAnno.UIX
   internal class CIMAnnoDockpaneViewModel : DockPane
   {
     private const string _dockPaneID = "CIMViewerAnno_UI_CIMAnnoDockpane";
-    private ImageSource _img;
     private CIMTextGraphic _cimTextGraphic = null;
-    private CIMViewerAnnoControl _avalon = null;
     private static bool _oneShot = false;
 
     protected CIMAnnoDockpaneViewModel() { }

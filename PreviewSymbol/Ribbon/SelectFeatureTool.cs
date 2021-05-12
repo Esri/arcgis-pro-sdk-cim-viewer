@@ -73,13 +73,11 @@ namespace PreviewSymbol.Ribbon
 			Geometry sel_geom = null;
 			IDisposable sel_graphic = null;
 			//Flash the selection geometry so we can see where we clicked
-			QueuedTask.Run(() =>
+			await QueuedTask.Run(() =>
 			{
 				sel_geom = GeometryEngine.Instance.Buffer(geometry, _bufferDist) as Polygon;
 				sel_graphic = mv.AddOverlay(sel_geom, _polyOutline);
-			});
-
-			
+			});			
 
 			await QueuedTask.Run(() => {
 
