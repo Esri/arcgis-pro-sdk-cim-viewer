@@ -119,7 +119,7 @@ The requirements for the machine on which you develop your ArcGIS Pro add-ins ar
 
 #### ArcGIS Pro
 
-* ArcGIS Pro 2.5 
+* ArcGIS Pro ~2.5~ 2.8
 
 #### Supported platforms
 
