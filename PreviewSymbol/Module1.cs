@@ -20,6 +20,7 @@ using ArcGIS.Core.Events;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
+using ArcGIS.Desktop.Layouts;
 
 namespace PreviewSymbol
 {
@@ -29,16 +30,24 @@ namespace PreviewSymbol
 
 		public CIMSymbol SelectedSymbol { get; set; }
 
-		public string SelectedFeatureLayer { get; set; }
+		/// <summary>
+		/// If this is present, it means that a graphic element (from
+		/// a graphics layer) has been selected
+		/// </summary>
+		public GraphicElement SelectedElement { get; set; }
+
+		public string SelectedLayerName { get; set; }
 
 		public long SelectedOID { get; set; }
 
 		public string Message { get; set; }
 
-		public SelectedSymbolChangedEventArgs(CIMSymbol symbol, string featureLayer, long oid, string msg)
+		public SelectedSymbolChangedEventArgs(CIMSymbol symbol, GraphicElement element, string layerName,
+																					long oid, string msg)
 		{
 			SelectedSymbol = symbol;
-			SelectedFeatureLayer = featureLayer;
+			SelectedElement = element;
+			SelectedLayerName = layerName;
 			SelectedOID = oid;
 			Message = msg;
 		}
@@ -73,9 +82,11 @@ namespace PreviewSymbol
 		private static Module1 _this = null;
 
 		private CIMSymbol _selectedSymbol = null;
-		private string _featureLayer = null;
+		private GraphicElement _selectedElement = null;
+		private string _layerName = null;
 		private long _oid = -1;
 		private string _msg;
+		private bool _lockSymbolPreview = false;
 
 		/// <summary>
 		/// Retrieve the singleton instance to this module here
@@ -90,25 +101,41 @@ namespace PreviewSymbol
 
 		public CIMSymbol SelectedSymbol => _selectedSymbol;
 
-		public string FeatureLayerName => _featureLayer;
+		public GraphicElement SelectedElement => _selectedElement;
+
+		public string LayerName => _layerName;
 
 		public long SelectedOID => _oid;
 
 		public string Message => _msg;
 
-		public void SetSelectedSymbol(CIMSymbol symbol, string featureLayer, long oid, string msg)
+		public bool LockSymbolPreview
+		{
+			get
+			{
+				return _lockSymbolPreview;
+			}
+			set
+			{
+				_lockSymbolPreview = value;
+			}
+		}
+
+		public void SetSelected(CIMSymbol symbol, GraphicElement element, string layerName, 
+			                      long oid, string msg)
 		{
 			_selectedSymbol = symbol;
-			_featureLayer = featureLayer;
+			_selectedElement = element;
+			_layerName = layerName;
 			_oid = oid;
 			_msg = msg;
 			SelectedSymbolChangedEvent.Publish(
-				new SelectedSymbolChangedEventArgs(symbol, featureLayer, oid, msg));
+				new SelectedSymbolChangedEventArgs(symbol, element, layerName, oid, msg));
 		}
 
-		public void NoSelectedSymbol(string msg)
+		public void NothingSelected(string msg)
 		{
-			SetSelectedSymbol(null, "", -1, msg);
+			SetSelected(null, null, "", -1, msg);
 		}
 
 		public T DeserializeXmlDefinition<T>(string xmlDefinition)

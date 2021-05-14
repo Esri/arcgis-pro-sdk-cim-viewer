@@ -24,9 +24,10 @@ namespace PreviewSymbol.Ribbon
 	internal class SelectFeatureTool : MapTool
 	{
 
-		private long _featureOID = -1;
+		private long _oid = -1;
 		private string _name = "";
 		private CIMSymbol _symbol = null;
+		private GraphicElement _graphicElem = null;
 		private string _msg = "";
 
 		private double _bufferDist = 0;
@@ -108,20 +109,22 @@ namespace PreviewSymbol.Ribbon
 				if (result2.Count > 0)
 				{
 					var elem = result2.First() as GraphicElement;
+					_graphicElem = elem;
 					_symbol = elem.GetGraphic().Symbol.Symbol;
 					_name = ((GraphicsLayer)elem.GetParent()).Name;
-					_featureOID = -1;
+					_oid = -1;
 					_msg = $"Graphic element {elem.Name}";
 				}
 				//Then Annotation...
 				else if (annoLayer != null)
 				{
+					_graphicElem = null;
 					_name = annoLayer.Name;
-					_featureOID = result[annoLayer][0];
-					_msg = $"anno feature {_featureOID}";
+					_oid = result[annoLayer][0];
+					_msg = $"anno feature {_oid}";
 					var qf = new QueryFilter()
 					{
-						ObjectIDs = new List<long> { _featureOID }
+						ObjectIDs = new List<long> { _oid }
 					};
 
 					var rowcursor = annoLayer.GetSelection().Search(qf);
@@ -136,22 +139,24 @@ namespace PreviewSymbol.Ribbon
 				//Then anything else...
 				else if (symbolLayer != null)
 				{
+					_graphicElem = null;
 					_name = symbolLayer.Name;
-					_featureOID = result[symbolLayer][0];
-					_msg = $"feature {_featureOID}";
-					_symbol = symbolLayer.LookupSymbol(_featureOID, MapView.Active);
+					_oid = result[symbolLayer][0];
+					_msg = $"feature {_oid}";
+					_symbol = symbolLayer.LookupSymbol(_oid, MapView.Active);
 				}
 			});
 
-			Module1.Current.SetSelectedSymbol(_symbol, _name, _featureOID, _msg);
+			Module1.Current.SetSelected(_symbol, _graphicElem, _name, _oid, _msg);
 			return true;
 		}
 
 		private void Reset()
 		{
-			_featureOID = -1;
+			_oid = -1;
 			_name = "";
 			_symbol = null;
+			_graphicElem = null;
 			_msg = "";
 		}
 	}
