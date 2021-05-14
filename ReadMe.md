@@ -23,11 +23,13 @@ A second add-in, CIMViewerAnno, has been added to the CIMViewerSolution. CIMView
 
 **You must install Pro SDK 2.5**. This version of the CIM Viewer will not work with earlier versions. They do not contain the layout and annotation APIs.
 
-## ArcGIS Pro 2.5 (minimum requirement)
+## ArcGIS Pro ~2.5~ 2.8 (minimum requirement)
 
  * Support for layouts and layout elements added
  * A CIMViewerAnno project is added to allow you to view and edit anno text graphics CIM xml.
  * .NET 4.8 and Visual Studio 2019 is required
+ * Enhancements added for new events added in 2.8.
+ * Updates to the CIMGraphicsPreview
  
  ![UI](Screenshots/Screen6.png) 
 
