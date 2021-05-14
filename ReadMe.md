@@ -8,7 +8,7 @@ Subject:               Framework, Map Authoring
 Contributor:           ArcGIS Pro SDK Team <arcgisprosdk@esri.com>
 Organization:          Esri, http://www.esri.com
 Date:                  5/14/2020
-ArcGIS Pro:            2.5
+ArcGIS Pro:            2.8
 Visual Studio:         2019
 .NET Target Framework: .NET Framework 4.8
 ```
