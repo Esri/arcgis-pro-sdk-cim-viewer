@@ -21,7 +21,7 @@ The Save button will save any changes you make back to the layer, map, scene, or
 
 A second add-in, CIMViewerAnno, has been added to the CIMViewerSolution. CIMViewerAnno adds a dockpane that allows you to view the CIMTextGraphic of annotation features. With at least one annotation layer loaded into the current map, select annotation features to load their CIM (similar to the way the CIMViewer works). You will see a preview image of the selected text graphic along with its CIM definition. You can use the standard Pro select tool or the custom select tool provided with the CIMViewerAnno add-in.
 
-**You must install Pro SDK 2.5**. This version of the CIM Viewer will not work with earlier versions. They do not contain the layout and annotation APIs.
+**You must install Pro SDK ~2.5~ 2.8**. This version of the CIM Viewer will not work with earlier versions. They do not contain the layout and annotation APIs.
 
 ## ArcGIS Pro ~2.5~ 2.8 (minimum requirement)
 
