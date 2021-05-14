@@ -29,7 +29,7 @@ A second add-in, CIMViewerAnno, has been added to the CIMViewerSolution. CIMView
  * A CIMViewerAnno project is added to allow you to view and edit anno text graphics CIM xml.
  * .NET 4.8 and Visual Studio 2019 is required
  * Enhancements added for new events added in 2.8.
- * Updates to the CIMGraphicsPreview
+ * Updates to the CIMPreviewSymbol
  
  ![UI](Screenshots/Screen6.png) 
 
