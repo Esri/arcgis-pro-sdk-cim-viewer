@@ -176,7 +176,7 @@ namespace CIMViewer
 
 			#region Reports
 
-			ArcGIS.Desktop.Layouts.Reports.Events.ReportDataSourceChangedEvent.Subscribe((args) =>
+			ArcGIS.Desktop.Reports.Events.ReportDataSourceChangedEvent.Subscribe((args) =>
 			{
 				if (LayoutView.Active == null)
 					return;
@@ -192,7 +192,7 @@ namespace CIMViewer
 				}
 			});
 
-			ArcGIS.Desktop.Layouts.Reports.Events.ReportPropertyChangedEvent.Subscribe((args) =>
+			ArcGIS.Desktop.Reports.Events.ReportPropertyChangedEvent.Subscribe((args) =>
 			{
 				if (LayoutView.Active == null)
 					return;
@@ -203,7 +203,7 @@ namespace CIMViewer
 					CIMService = new LayoutService(LayoutView.Active.Layout);
 			});
 
-			ArcGIS.Desktop.Layouts.Reports.Events.ReportSectionChangedEvent.Subscribe((args) =>
+			ArcGIS.Desktop.Reports.Events.ReportSectionChangedEvent.Subscribe((args) =>
 			{
 				if (LayoutView.Active == null)
 					return;
