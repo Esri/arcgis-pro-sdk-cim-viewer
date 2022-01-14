@@ -178,6 +178,8 @@ namespace CIMViewer
 						break;
 					case ElementEventHint.ElementRemoved:
 						break;
+					case ElementEventHint.SelectionChanged:
+						break;
 					case ElementEventHint.MapFrameActivated:
 						break;
 					case ElementEventHint.MapFrameDeactivated:
@@ -190,32 +192,6 @@ namespace CIMViewer
 						break;
 					case ElementEventHint.StyleChanged:
 						break;
-				}
-			});
-
-			ArcGIS.Desktop.Mapping.Events.ElementSelectionChangedEvent.Subscribe((args) =>
-			{
-				if (LayoutView.Active == null)
-					return;
-				if (CIMViewerModule.IgnoreEvents)
-					return;
-
-				if (args.SelectedElementCount == 0)
-				{
-					//The layout itself has been selected
-					var layout = LayoutView.Active?.Layout;
-					if (layout != null)
-					{
-						lock (this)
-							CIMService = new LayoutService(layout);
-					}
-				}
-				else
-				{
-					//take the first element
-					lock (this)
-						CIMService = new LayoutElementService(
-							args.ElementContainer.GetSelectedElements().First());
 				}
 			});
 
@@ -419,9 +395,9 @@ namespace CIMViewer
 				if (surface != null)
 					lock (this)
 						CIMService = new MapMemberService(surface.Layer);
-				else if (slice != null)
-					lock (this)
-						CIMService = new MapMemberService(slice.Layer);
+				//else if (slice != null)
+				//	lock (this)
+				//		CIMService = new MapMemberService(slice.Layer);
 				else if (section != null)
 					lock (this)
 						CIMService = new MapMemberService(section.Layer);
