@@ -395,9 +395,9 @@ namespace CIMViewer
 				if (surface != null)
 					lock (this)
 						CIMService = new MapMemberService(surface.Layer);
-				//else if (slice != null)
-				//	lock (this)
-				//		CIMService = new MapMemberService(slice.Layer);
+				else if (slice != null)
+					lock (this)
+						CIMService = new MapMemberService(slice.Layer);
 				else if (section != null)
 					lock (this)
 						CIMService = new MapMemberService(section.Layer);
