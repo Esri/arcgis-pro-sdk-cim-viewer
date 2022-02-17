@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ArcGIS.Desktop.Core;
 using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Contracts;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
@@ -34,10 +35,23 @@ namespace CIMViewer
 
 		protected CIMDockpaneViewModel()
 		{
-
-			Initialize();
 			_originalCaption = this.Caption;
-			SetMapMember(MapView.Active);
+			if (Project.Current != null && FrameworkApplication.Panes.ActivePane != null)
+			{
+				//map or layout?
+				if (FrameworkApplication.Panes.ActivePane is ILayoutPane layoutPane) 
+				{
+					lock (_lock)
+					{
+						CIMService = new LayoutService(layoutPane.LayoutView.Layout);
+					}
+				}
+				else if (FrameworkApplication.Panes.ActivePane is IMapPane mapPane)
+				{
+					SetMapMember(mapPane.MapView);
+				}
+			}
+			Initialize();
 		}
 
 
@@ -59,6 +73,25 @@ namespace CIMViewer
 			//      CIMService = new LayoutService(args.Layout);
 			//    }
 			//  }
+			//});
+
+			//ArcGIS.Desktop.Core.Events.ProjectItemsChangedEvent.Subscribe((args) =>
+			//{
+			//	if (args.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+			//	{
+			//		//its an add action
+			//		if (args.ProjectItem is LayoutProjectItem layoutProjectItem)//it's an add layout
+			//		{
+			//			var on_qt = QueuedTask.OnWorker;
+			//			var layout_name = layoutProjectItem.Name;
+			//			//var layout = layoutProjectItem.GetLayout();
+			//		}
+			//	}
+			//	else if (args.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
+			//	{
+			//		//its a delete
+			//	}
+
 			//});
 
 			ArcGIS.Desktop.Layouts.Events.LayoutEvent.Subscribe((args) =>
@@ -100,10 +133,6 @@ namespace CIMViewer
 
 				switch (args.Hint)
 				{
-					case LayoutViewEventHint.Activated:
-						break;
-					case LayoutViewEventHint.Deactivated:
-						break;
 					case LayoutViewEventHint.Closed:
 						if (_cimService != null && (_cimService.ServiceType == CIMServiceType.Layout ||
 																		_cimService.ServiceType == CIMServiceType.LayoutElement))
@@ -117,8 +146,6 @@ namespace CIMViewer
 								}
 						}
 						break;
-					case LayoutViewEventHint.Closing:
-						break;
 					//replaces LayoutViewEventType.Initialized
 					case LayoutViewEventHint.Opened:
 						if (LayoutView.Active != null)
@@ -131,7 +158,12 @@ namespace CIMViewer
 							}
 						}
 						break;
+					case LayoutViewEventHint.Activated:
+					case LayoutViewEventHint.Deactivated:
+					case LayoutViewEventHint.Closing:
 					case LayoutViewEventHint.ExtentChanged:
+					case LayoutViewEventHint.DrawingComplete:
+					case LayoutViewEventHint.PauseDrawingChanged:
 						break;
 				}
 			});
@@ -286,14 +318,15 @@ namespace CIMViewer
 			});
 			ArcGIS.Desktop.Mapping.Events.TOCSelectionChangedEvent.Subscribe((args) =>
 			{
+				if (CIMViewerModule.IgnoreEvents)
+					return;
 				//this event also comes through on Layout
 				if (MapView.Active == null)
 					return;
-
-				if (CIMViewerModule.IgnoreEvents)
-					return;
-
-				SetMapMember(args.MapView);
+				//The MapView can be active if there is a mapframe on the layout so
+				//check we really do have a MapView as the active pane (and not a layout)
+				if (FrameworkApplication.Panes.ActivePane is IMapPane)
+					SetMapMember(args.MapView);
 
 			});
 
@@ -305,6 +338,11 @@ namespace CIMViewer
 				//if (args.OutgoingView != null && 
 				//(_cimService?.ServiceType == CIMServiceType.Map || _cimService?.ServiceType == CIMServiceType.MapMember))
 				//  CIMService = null;
+				if (FrameworkApplication.Panes.ActivePane != null)
+				{
+					if (FrameworkApplication.Panes.ActivePane is ILayoutPane)
+						return;//the mapview in a mapframe is activating/deactivating
+				}
 
 				//This can fire for a map on a layout if the layout is being activated...
 				if (args.IncomingView != null)
@@ -498,6 +536,8 @@ namespace CIMViewer
 				//refresh our item
 				var layout = LayoutView.Active?.Layout;
 				var elem = elements.FirstOrDefault(e => e.Name == _cimService.URI);
+				if (elem == null)
+					elem = elements.FirstOrDefault();
 				lock (this)
 				{
 					CIMService = elem != null ? new LayoutElementService(elem) : null;
