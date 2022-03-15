@@ -90,10 +90,10 @@ namespace PreviewSymbol.Ribbon
 				_msg = "No basic feature layers or graphics layers selected";
 
 				//first anno layer (if there is one)
-				var annoLayer = result.Keys.OfType<AnnotationLayer>().FirstOrDefault();
+				var annoLayer = result.ToDictionary().Keys.OfType<AnnotationLayer>().FirstOrDefault();
 
 				//get the first feature layer that supports symbol lookup
-				var symbolLayer = result.Keys.FirstOrDefault(layer =>
+				var symbolLayer = result.ToDictionary().Keys.FirstOrDefault(layer =>
 				{
 					if (layer is FeatureLayer featureLayer)
 					{

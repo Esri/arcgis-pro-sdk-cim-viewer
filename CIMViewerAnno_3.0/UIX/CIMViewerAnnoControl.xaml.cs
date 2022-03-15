@@ -21,6 +21,7 @@ using ArcGIS.Desktop.Framework.Threading.Tasks;
 using ArcGIS.Desktop.Mapping;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Folding;
+using CIMViewerAnno.Helpers;
 
 namespace CIMViewerAnno.UIX
 {

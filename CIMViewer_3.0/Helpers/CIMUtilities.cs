@@ -10,6 +10,8 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
+using ArcGIS.Core.CIM;
+using ArcGIS.Core.Internal.CIM;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,6 +23,16 @@ using System.Xml.Serialization;
 
 namespace CIMViewer.Helpers {
     internal static class CIMUtilities {
+
+        public static string ToXml(this CIMObject cimObject)
+        {
+            return XmlUtil.ToXml(cimObject);
+        }
+
+        public static T FromXml<T>(string xml) where T : CIMObject, new()
+        {
+            return XmlUtil.FromXml<T>(xml);
+        }
 
         public static void ValidateXML(string xml) {
             var doc = new XmlDocument();

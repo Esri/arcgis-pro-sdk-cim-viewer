@@ -22,6 +22,8 @@ using ArcGIS.Desktop.Layouts;
 using ArcGIS.Desktop.Mapping;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Folding;
+using PreviewSymbol.Helpers;
+
 
 namespace PreviewSymbol.UIX
 {

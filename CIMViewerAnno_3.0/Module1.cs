@@ -43,7 +43,8 @@ namespace CIMViewerAnno
     {
       ArcGIS.Desktop.Mapping.Events.MapSelectionChangedEvent.Subscribe(args => {
         if (args.Selection?.Count > 0) {
-          var match = args.Selection.Where(kvp => {
+          var dict = args.Selection.ToDictionary();
+          var match = dict.Where(kvp => {
             var anno = kvp.Key as AnnotationLayer;
             return anno != null;
           }).FirstOrDefault();
@@ -64,7 +65,7 @@ namespace CIMViewerAnno
         var mv = MapView.Active;
         if (mv.Map.SelectionCount > 0) {
           QueuedTask.Run(() => {
-            var match = mv.Map.GetSelection().Where(kvp => {
+            var match = mv.Map.GetSelection().ToDictionary().Where(kvp => {
               var anno = kvp.Key as AnnotationLayer;
               return anno != null;
             }).FirstOrDefault();

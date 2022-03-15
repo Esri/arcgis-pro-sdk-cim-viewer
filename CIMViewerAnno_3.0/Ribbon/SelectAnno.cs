@@ -32,7 +32,7 @@ namespace CIMViewerAnno.Ribbon
     {
       await QueuedTask.Run(() => {
         var select = MapView.Active.SelectFeatures(geometry);
-        var annoLayer = select.Keys.FirstOrDefault(l => l is AnnotationLayer) as AnnotationLayer;
+        var annoLayer = select.ToDictionary().Keys.FirstOrDefault(l => l is AnnotationLayer) as AnnotationLayer;
         if (annoLayer == null)
           return;
 
