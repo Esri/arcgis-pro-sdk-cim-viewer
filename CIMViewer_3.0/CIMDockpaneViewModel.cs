@@ -486,10 +486,28 @@ namespace CIMViewer
 			{
 				//Was a layer selected?
 				var layer = mv.GetSelectedLayers().FirstOrDefault();
+				var surface_layer = mv.GetSelectedElevationSurfaceLayers().FirstOrDefault();
+				var source_layer = mv.GetSelectedElevationSourceLayers().FirstOrDefault();
+
+				//Was a layer selected?
 				if (layer != null)
 				{
 					lock (this)
 						CIMService = new MapMemberService(layer);
+					changed = true;
+				}
+				//Was an elevation surface selected?
+				else if (surface_layer != null)
+        {
+					lock (this)
+						CIMService = new MapMemberService(surface_layer);
+					changed = true;
+				}
+				//Was an elevation source selected?
+				else if (source_layer != null)
+				{
+					lock (this)
+						CIMService = new MapMemberService(source_layer);
 					changed = true;
 				}
 				else
