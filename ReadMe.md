@@ -7,7 +7,7 @@ Language:              C#
 Subject:               Framework, Map Authoring
 Contributor:           ArcGIS Pro SDK Team <arcgisprosdk@esri.com>
 Organization:          Esri, http://www.esri.com
-Date:                  5/14/2020
+Date:                  6/22/2022
 ArcGIS Pro:            2.8
 Visual Studio:         2019
 .NET Target Framework: .NET Framework 4.8
@@ -21,9 +21,21 @@ The Save button will save any changes you make back to the layer, map, scene, or
 
 A second add-in, CIMViewerAnno, has been added to the CIMViewerSolution. CIMViewerAnno adds a dockpane that allows you to view the CIMTextGraphic of annotation features. With at least one annotation layer loaded into the current map, select annotation features to load their CIM (similar to the way the CIMViewer works). You will see a preview image of the selected text graphic along with its CIM definition. You can use the standard Pro select tool or the custom select tool provided with the CIMViewerAnno add-in.
 
+At **3.0** the CIM Viewer has been updated to incorporate API breaking changes as well as the move to .NET 6 and Visual Studio 2022. However, because many developers may still be on 2.x versions of Pro, the original 2.x solution and projects have been left in the master branch of the repo (for convenience). They will be removed from the master at 3.1.
+
+For the 3.0 (latest) version you must:
+Install ArcGIS Pro 3.0 + SDK, Visual Studio 2022 v17.2 or better (and .NET 6.0.5). Open the solution called CIMViewer_3.0.sln.
+
+![UI](Screenshots/cim-viewer-sln.png)
+
+For the 2.x flavor:
 **You must install Pro SDK ~2.5~ 2.8**. This version of the CIM Viewer will not work with earlier versions. They do not contain the layout and annotation APIs.
 
-## ArcGIS Pro ~2.5~ 2.8 (minimum requirement)
+## ArcGIS Pro 3.0 (minimum requirement)
+
+ * Migrated to ArcGIS Pro 3.0 and Visual Studio 2022
+
+## ArcGIS Pro ~2.5~ 2.8
 
  * Support for layouts and layout elements added
  * A CIMViewerAnno project is added to allow you to view and edit anno text graphics CIM xml.
@@ -119,20 +131,24 @@ The requirements for the machine on which you develop your ArcGIS Pro add-ins ar
 
 #### ArcGIS Pro
 
+* ArcGIS Pro 3.0
 * ArcGIS Pro ~2.5~ 2.8
 
 #### Supported platforms
 
+* Windows 11
 * Windows 10 (Home, Pro, Enterprise) (64 bit)
 * Windows 8.1 (Pro, and Enterprise) (64 bit) 
 
 #### Supported .NET framework
 
-* Microsoft .NET Framework 4.8 Developer Pack
+* version 3.0 - Microsoft .NET 6.0.5+
+* version 2.x - Microsoft .NET Framework 4.8 Developer Pack
 
 #### Supported IDEs
 
-* Visual Studio 2019 (Professional, Enterprise, and Community Editions)
+* version 3.0+ - Visual Studio 2022
+* version 2.x - Visual Studio 2019 (Professional, Enterprise, and Community Editions)
 
 Note: [ArcGIS Pro system requirements](https://pro.arcgis.com/en/pro-app/get-started/arcgis-pro-system-requirements.htm) 
 
@@ -143,7 +159,7 @@ Esri welcomes contributions from anyone and everyone. Please see our [guidelines
 Refer to this [wiki](https://github.com/Esri/arcgis-pro-sdk-community-samples/wiki/ProGuide-Contribute-Samples) for detailed instructions on the ArcGIS Pro SDK Samples submission process.
 
 ## Licensing
-Copyright 2020 Esri
+Copyright 2022 Esri
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
