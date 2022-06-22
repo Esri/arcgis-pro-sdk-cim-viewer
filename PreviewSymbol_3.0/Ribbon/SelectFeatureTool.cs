@@ -84,7 +84,7 @@ namespace PreviewSymbol.Ribbon
 
 				var result = MapView.Active.SelectFeatures(
 					sel_geom, SelectionCombinationMethod.New, false, false);
-				var result2 = MapView.Active.SelectElements(
+				var result2 = MapView.Active.SelectElementsEx(
 					sel_geom, SelectionCombinationMethod.New, false);
 
 				_msg = "No basic feature layers or graphics layers selected";
@@ -160,4 +160,38 @@ namespace PreviewSymbol.Ribbon
 			_msg = "";
 		}
 	}
+
+	internal static class MapViewExtensions
+  {
+
+		public static IReadOnlyList<Element> SelectElementsEx(
+			this MapView mapView, ArcGIS.Core.Geometry.Geometry geometry,
+			SelectionCombinationMethod method = SelectionCombinationMethod.New,
+			bool isWhollyWithin = false)
+    {
+			return mapView.SelectElementsEx(null, geometry, method, isWhollyWithin);
+    }
+
+		public static IReadOnlyList<Element> SelectElementsEx(
+			this MapView mapView, GraphicsLayer graphicsLayer,
+			ArcGIS.Core.Geometry.Geometry geometry,
+      SelectionCombinationMethod method = SelectionCombinationMethod.New,
+      bool isWhollyWithin = false)
+    {
+			mapView.SelectElements(graphicsLayer, geometry, method, isWhollyWithin);
+			if (graphicsLayer != null)
+				return graphicsLayer.GetSelectedElements();
+
+			//Graphics layer is null
+			var graphicsLayers = mapView.Map.GetLayersAsFlattenedList().OfType<GraphicsLayer>() ??
+				new List<GraphicsLayer>();
+
+			var sel_elems = new List<Element>();
+			foreach (var gl in graphicsLayers)
+			{
+				sel_elems.AddRange(gl.GetSelectedElements());
+			}
+			return sel_elems;
+		}
+  }
 }
