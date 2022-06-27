@@ -176,7 +176,7 @@ namespace CIMViewer
 					return;
 				IEnumerable<IElement> elems = null;
 
-				if (args.Elements?.Count() > 0)
+				if (args.Elements?.Count() > 0 && args.Hint != ElementEventHint.ElementRemoved)
 				{
 					elems = args.Elements;
 				}
