@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "PreviewSymbol": {
-      "commandName": "Executable",
-      "executablePath": "C:\\ArcGIS\\bin\\ArcGISPro.exe"
-    }
-  }
-}
