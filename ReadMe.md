@@ -24,7 +24,7 @@ A second add-in, CIMViewerAnno, has been added to the CIMViewerSolution. CIMView
 At **3.0** the CIM Viewer has been updated to incorporate API breaking changes as well as the move to .NET 6 and Visual Studio 2022. However, because many developers may still be on 2.x versions of Pro, the original 2.x solution and projects have been left in the master branch of the repo (for convenience).
 
 For the 3.0+ (latest) version you must:
-Install ArcGIS Pro 3.0+ + SDK, Visual Studio 2022 v17.2 or better (and .NET 6.0.5). Open the solution called CIMViewer_3.0.sln.
+Install ArcGIS Pro 3.0+ and SDK, Visual Studio 2022 v17.2 or better (and .NET 6.0.5). Open the solution called CIMViewer_3.0.sln.
 
 ![UI](Screenshots/cim-viewer-sln.png)
 
