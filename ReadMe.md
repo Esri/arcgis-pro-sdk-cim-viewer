@@ -19,12 +19,19 @@ The CIMViewer can be used to examine layer, map (2D or 3D), and layout CIM defin
 
 The Save button will save any changes you make back to the layer, map, scene, or layout whose CIM definition you loaded. However, there is not much of a safety net to protect you against making really bad xml or other inadvertant mistakes so use the `Save` functionality with caution. The primary use of the CIM Viewer is to allow you, the developer, to decipher the inner workings or "guts" of the CIM and how it affects the configuration of your Pro project at any given point in time. In other words, it is a <u>learning or educational tool</u> that can be used to help you in your Pro development efforts. It is **not** a customization or configuration tool.
 
-A second add-in, CIMViewerAnno, has been added to the CIMViewerSolution. CIMViewerAnno adds a dockpane that allows you to view the CIMTextGraphic of annotation features. With at least one annotation layer loaded into the current map, select annotation features to load their CIM (similar to the way the CIMViewer works). You will see a preview image of the selected text graphic along with its CIM definition. You can use the standard Pro select tool or the custom select tool provided with the CIMViewerAnno add-in.
+A second add-in, CIMViewerAnno*, has been added to the CIMViewerSolution. CIMViewerAnno adds a dockpane that allows you to view the CIMTextGraphic of annotation features. With at least one annotation layer loaded into the current map, select annotation features to load their CIM (similar to the way the CIMViewer works). You will see a preview image of the selected text graphic along with its CIM definition. You can use the standard Pro select tool or the custom select tool provided with the CIMViewerAnno add-in.  
+
+&#42;Not included in the 3.3 sample.
 
 At **3.0** the CIM Viewer has been updated to incorporate API breaking changes as well as the move to .NET 6 and Visual Studio 2022. However, because many developers may still be on 2.x versions of Pro, the original 2.x solution and projects have been left in the master branch of the repo (for convenience).
 
 For the 3.0+ (latest) version you must:
 Install ArcGIS Pro 3.0+ and SDK, Visual Studio 2022 v17.2 or better (and .NET 6.0.5). Open the solution called CIMViewer_3.0.sln.
+
+At **3.3** the CIM Viewer has been updated to incorporate .NET 8 and Visual Studio 2022 17.8 (or later). However, because many developers may still be on 2.x versions and  3.0 - 3.2 versions of Pro, the original 2.x solution, 3.0 solution and associated projects have been left in the master branch of the repo (for convenience). Note: the CIMViewerAnno tool is only in the 2.x and 3.0 versions of the solution. It is not included in the sample for 3.3+.
+
+For the 3.3+ (latest) version you must:
+Install ArcGIS Pro 3.3+ and SDK, Visual Studio 2022 v17.8 or better (which includes .NET 8). Open the solution called CIMViewer_3.3.sln.
 
 ![UI](Screenshots/cim-viewer-sln.png)
 
@@ -34,6 +41,10 @@ For the 2.x flavor:
 ## ArcGIS Pro 3.0 (minimum requirement)
 
  * Migrated to ArcGIS Pro 3.0 and Visual Studio 2022
+
+## ArcGIS Pro 3.3 (minimum requirement)
+
+ * Migrated to ArcGIS Pro 3.3 and Visual Studio 2022 v17.8+ and .NET 8
 
 ## ArcGIS Pro ~2.5~ 2.8
 
@@ -97,6 +108,8 @@ If your References to the ArcGIS Pro Assemblies in the CIMViewer solution are br
 
 Note: Save will fail if you do not have edit permissions on the anno feature class or `annoFeatureClassDef.AreSymbolOverridesAllowed()` returns false.
 
+Only included in the **2.x** and **3.0** sample
+
 ## PreviewSymbol tool
 
 1. Make sure you have the add-in built and available
@@ -131,6 +144,7 @@ The requirements for the machine on which you develop your ArcGIS Pro add-ins ar
 
 #### ArcGIS Pro
 
+* ArcGIS Pro 3.3+
 * ArcGIS Pro 3.0+
 * ArcGIS Pro ~2.5~ 2.8
 
@@ -142,12 +156,14 @@ The requirements for the machine on which you develop your ArcGIS Pro add-ins ar
 
 #### Supported .NET framework
 
+* version 3.3+ - Microsoft .NET 8+
 * version 3.0+ - Microsoft .NET 6.0.5+
 * version 2.x - Microsoft .NET Framework 4.8 Developer Pack
 
 #### Supported IDEs
 
-* version 3.0+ - Visual Studio 2022
+* version 3.3+ - Visual Studio 2022 17.8+
+* version 3.0+ - Visual Studio 2022  17.2+
 * version 2.x - Visual Studio 2019 (Professional, Enterprise, and Community Editions)
 
 Note: [ArcGIS Pro system requirements](https://pro.arcgis.com/en/pro-app/get-started/arcgis-pro-system-requirements.htm) 
