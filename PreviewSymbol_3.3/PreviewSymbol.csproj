@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <NoWarn>CA1416</NoWarn>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config.daml" />
+    <Content Include="Images\AddInDesktop16.png" />
+    <Content Include="Images\AddInDesktop32.png" />
+    <Content Include="DarkImages\AddInDesktop16.png" />
+    <Content Include="DarkImages\AddInDesktop32.png" />
+    <Content Include="Images\GenericButtonPurple16.png" />
+    <Content Include="Images\GenericButtonPurple32.png" />
+    <Content Include="DarkImages\GenericButtonPurple16.png" />
+    <Content Include="DarkImages\GenericButtonPurple32.png" />
+    <Content Include="Images\GenericButtonRed16.png" />
+    <Content Include="Images\GenericButtonRed32.png" />
+    <Content Include="DarkImages\GenericButtonRed16.png" />
+    <Content Include="DarkImages\GenericButtonRed32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ArcGIS.Core">
+			<HintPath>C:\Program Files\ArcGIS\Pro\bin\ArcGIS.Core.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="ArcGIS.Desktop.Catalog">
+			<HintPath>C:\Program Files\ArcGIS\Pro\bin\Extensions\Catalog\ArcGIS.Desktop.Catalog.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="ArcGIS.Desktop.Core">
+			<HintPath>C:\Program Files\ArcGIS\Pro\bin\Extensions\Core\ArcGIS.Desktop.Core.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="ArcGIS.Desktop.Editing">
+			<HintPath>C:\Program Files\ArcGIS\Pro\bin\Extensions\Editing\ArcGIS.Desktop.Editing.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="ArcGIS.Desktop.Extensions">
+			<HintPath>C:\Program Files\ArcGIS\Pro\bin\Extensions\DesktopExtensions\ArcGIS.Desktop.Extensions.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="ArcGIS.Desktop.Framework">
+			<HintPath>C:\Program Files\ArcGIS\Pro\bin\ArcGIS.Desktop.Framework.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="ArcGIS.Desktop.Layouts">
+			<HintPath>C:\Program Files\ArcGIS\Pro\bin\Extensions\Layout\ArcGIS.Desktop.Layouts.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="ArcGIS.Desktop.Mapping">
+			<HintPath>C:\Program Files\ArcGIS\Pro\bin\Extensions\Mapping\ArcGIS.Desktop.Mapping.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+  </ItemGroup>
+  <Import Project="C:\Program Files\ArcGIS\Pro\bin\Esri.ProApp.SDK.Desktop.targets" Condition="Exists('C:\Program Files\ArcGIS\Pro\bin\Esri.ProApp.SDK.Desktop.targets') AND !Exists('Esri.ArcGISPro.Extensions.targets')" />
+</Project>
