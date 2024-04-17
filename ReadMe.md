@@ -33,7 +33,7 @@ At **3.3** the CIM Viewer has been updated to incorporate .NET 8 and Visual Stud
 For the 3.3+ (latest) version you must:
 Install ArcGIS Pro 3.3+ and SDK, Visual Studio 2022 v17.8 or better (which includes .NET 8). Open the solution called CIMViewer_3.3.sln.
 
-![UI](Screenshots/cim-viewer-sln.png)
+![UI](Screenshots/cim-viewer-sln3.3.png)
 
 ## ArcGIS Pro 3.3 (minimum requirement)
 
