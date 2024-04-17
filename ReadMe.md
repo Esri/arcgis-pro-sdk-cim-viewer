@@ -35,16 +35,13 @@ Install ArcGIS Pro 3.3+ and SDK, Visual Studio 2022 v17.8 or better (which inclu
 
 ![UI](Screenshots/cim-viewer-sln.png)
 
-For the 2.x flavor:
-**You must install Pro SDK ~2.5~ 2.8**. This version of the CIM Viewer will not work with earlier versions. They do not contain the layout and annotation APIs.
-
-## ArcGIS Pro 3.0 (minimum requirement)
-
- * Migrated to ArcGIS Pro 3.0 and Visual Studio 2022
-
 ## ArcGIS Pro 3.3 (minimum requirement)
 
  * Migrated to ArcGIS Pro 3.3 and Visual Studio 2022 v17.8+ and .NET 8
+   
+## ArcGIS Pro 3.0 (minimum requirement)
+
+ * Migrated to ArcGIS Pro 3.0 and Visual Studio 2022
 
 ## ArcGIS Pro ~2.5~ 2.8
 
@@ -55,6 +52,9 @@ For the 2.x flavor:
  * Updates to the CIMPreviewSymbol
  
  ![UI](Screenshots/Screen6.png) 
+
+ Note: For the 2.x flavor:
+**You must install Pro SDK ~2.5~ 2.8**. This version of the CIM Viewer will not work with earlier versions of Pro. They do not contain the layout and annotation APIs.
 
 ## CIM Viewer tool, CIMViewerAnno, and PreviewSymbol resources
 
