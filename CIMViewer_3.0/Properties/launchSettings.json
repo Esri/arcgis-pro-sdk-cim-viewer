@@ -2,7 +2,7 @@
   "profiles": {
     "CIMViewer": {
       "commandName": "Executable",
-      "executablePath": "C:\\ArcGIS\\bin\\ArcGISPro.exe",
+      "executablePath": "C:\\Program Files\\ArcGIS\\Pro\\bin\\ArcGISPro.exe",
       "nativeDebugging": true
     }
   }
