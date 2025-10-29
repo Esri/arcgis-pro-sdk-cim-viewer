@@ -38,6 +38,8 @@ Install ArcGIS Pro 3.3+ and SDK, Visual Studio 2022 v17.8 or better (which inclu
 ## ArcGIS Pro 3.3 (minimum requirement)
 
  * Migrated to ArcGIS Pro 3.3 and Visual Studio 2022 v17.8+ and .NET 8
+ * 10/29/2025 - Updated AvalonEdit Nuget version to 6.3.1.120
+ * 10/29/2025 - Updated DotNetProjects.Extended.Wpf.Toolkit to 5.0.129
    
 ## ArcGIS Pro 3.0 (minimum requirement)
 
