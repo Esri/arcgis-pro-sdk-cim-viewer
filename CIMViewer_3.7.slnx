@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="CIMViewer_3.7/CIMViewer.csproj" />
+  <Project Path="PreviewSymbol_3.7/PreviewSymbol.csproj" />
+</Solution>

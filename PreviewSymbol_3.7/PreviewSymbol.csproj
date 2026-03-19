@@ -1,25 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0-windows7.0</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <NoWarn>CA1416</NoWarn>
-    <UseWindowsForms>true</UseWindowsForms>
-    <UseWPF>true</UseWPF>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="6.3.1.120" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Config.daml" />
     <Content Include="Images\AddInDesktop16.png" />
     <Content Include="Images\AddInDesktop32.png" />
-    <Content Include="Images\CIMViewer16.png" />
-    <Content Include="Images\CIMViewer32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="AvalonEdit" Version="6.3.1.120" />
-    <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="5.0.129" />
+    <Content Include="DarkImages\AddInDesktop16.png" />
+    <Content Include="DarkImages\AddInDesktop32.png" />
+    <Content Include="Images\GenericButtonPurple16.png" />
+    <Content Include="Images\GenericButtonPurple32.png" />
+    <Content Include="DarkImages\GenericButtonPurple16.png" />
+    <Content Include="DarkImages\GenericButtonPurple32.png" />
+    <Content Include="Images\GenericButtonRed16.png" />
+    <Content Include="Images\GenericButtonRed32.png" />
+    <Content Include="DarkImages\GenericButtonRed16.png" />
+    <Content Include="DarkImages\GenericButtonRed32.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ArcGIS.Core">
